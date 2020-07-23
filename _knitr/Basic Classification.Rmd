@@ -3,7 +3,8 @@ title: "Demography Predictive Modeling Working Group - Basic methods for classif
 author: "Corey Sparks, Ph.D."
 date: July 23, 2020
 output:
-  html_document: default
+  html_document:
+    keep_md: true
 ---
 
 ```{r setup, include=FALSE}

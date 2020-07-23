@@ -2,10 +2,9 @@
 title: "Bexar County Income Ratio"
 author: "Corey Sparks, PhD"
 date: July 23, 2020
-output: 
-  prettydoc::html_pretty:
-    theme: cayman
-    highlight: github
+output:
+  html_document:
+    keep_md: true
 ---
 
 This example shows how to calculate an index of income segregation for Bexar County, TX using data from the 2018 American Community Survey
