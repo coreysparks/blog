@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Corey Sparks, Ph.D. - UTSA Department of Demography" />
+
+<meta name="date" content="2020-07-14" />
+
+<title>Demography Informal Methods Seminar - Introduction to Time Series Analysis</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+/* A workaround for https://github.com/jgm/pandoc/issues/4278 */
+a.sourceLine {
+  pointer-events: auto;
+}
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<link rel="stylesheet" href="IntroTimeSeries_files/style.css" type="text/css" />
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<section class="page-header">
+<h1 class="title toc-ignore project-name">Demography Informal Methods Seminar - Introduction to Time Series Analysis</h1>
+<h4 class="author project-author">Corey Sparks, Ph.D. - UTSA Department of Demography</h4>
+<h4 class="date project-date">July 14, 2020</h4>
+</section>
+
+
+
+<section class="main-content">
+<div id="time-series-analysis" class="section level2">
+<h2>Time Series Analysis</h2>
+<p>I would suggest you read chapters 1 through 3 of <a href="https://utsacloud-my.sharepoint.com/:b:/g/personal/corey_sparks_utsa_edu/Ear7EgBI0FVJmN-GhNqe0mIBNI5bNdB5QVZzeY2M1dnZUg?e=cA8e68">Time Series Analysis and Its Applications 4th ed</a> to get a introductory treatment of this topic.</p>
+<p>I also strongly urge you to check out <a href="https://otexts.com/fpp2/">Rob Hyndman’s book on forecasting</a>, which is free.</p>
+<p>In time series analysis, we are typically interested in describing the pattern of variation of a variable over time. This can be extended to include multiple variables, but the largest number of applications involve a single variable.</p>
+<p>Time series data are very different from other data you may have encountered. These are <em>NOT</em> the same as longitudinal data, nor are they the same as event history data. Sometimes these terms are thrown around as if they are the same, but they are not. Time series data are collected on a very regular basis, such as every minute, day, week, month, etc, and are typically measured for a long period of time, often years.</p>
+<p>Much of time series analysis is descriptive, in that we are wanting to describe a few basic qualities of a time series.</p>
+<p>In these examples, we will use both simulated and real data. Data come from two sources: - <a href="https://www.bls.gov/webapps/legacy/cpsatab1.htm">BLS monthly unemployment rates</a> - <a href="https://aqs.epa.gov/aqsweb/airdata/download_files.html#Daily">Daily air quality for Bexar County</a></p>
+<div id="data" class="section level3">
+<h3>Data</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">#unemployment</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">load</span>(<span class="kw">url</span>(<span class="st">&quot;https://github.com/coreysparks/r_courses/blob/master/bls_unemp.Rdata?raw=true&quot;</span>))</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#air quality</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">load</span>(<span class="kw">url</span>(<span class="st">&quot;https://github.com/coreysparks/r_courses/blob/master/bexar_air.Rdata?raw=true&quot;</span>))</a></code></pre></div>
+</div>
+<div id="libraries" class="section level3">
+<h3>Libraries</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">library</span>(ggfortify)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">library</span>(forecast)</a></code></pre></div>
+<pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
+##   method            from
+##   as.zoo.data.frame zoo</code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;forecast&#39;:
+##   method                 from     
+##   autoplot.Arima         ggfortify
+##   autoplot.acf           ggfortify
+##   autoplot.ar            ggfortify
+##   autoplot.bats          ggfortify
+##   autoplot.decomposed.ts ggfortify
+##   autoplot.ets           ggfortify
+##   autoplot.forecast      ggfortify
+##   autoplot.stl           ggfortify
+##   autoplot.ts            ggfortify
+##   fitted.ar              ggfortify
+##   fortify.ts             ggfortify
+##   residuals.ar           ggfortify</code></pre>
+</div>
+</div>
+<div id="time-series-data" class="section level2">
+<h2>Time series data</h2>
+<div id="air-quality-data" class="section level4">
+<h4>Air quality data</h4>
+<p>These are daily data, which start at January 1, 2019. We tell R these are daily data by stating that the frequency is 365 (days)</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co">#daily Air quality index from January 1, 2019 - March 31, 2020</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">ts1&lt;-<span class="kw">ts</span>(bexar<span class="op">$</span>AQI, <span class="dt">frequency =</span> <span class="dv">365</span>, <span class="dt">start=</span><span class="kw">c</span>(<span class="dv">2019</span>,<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">print</span>(ts1)        </a></code></pre></div>
+<pre><code>## Time Series:
+## Start = c(2019, 1) 
+## End = c(2020, 91) 
+## Frequency = 365 
+##   [1] 106  53  32  38  52  41  41  45  35  42  31  42  39  58  55  28  33  30
+##  [19]  39  39  43  28  35  40  40  38  45  35  35  28  34  35  40  52  50  10
+##  [37]  28  47  49  52  55  14  23  23  38  56  61  53  56  19  23  34  41  35
+##  [55]  35  31  20  29  41  45  45  59  63  20  28  30  46  35  45  54  51  54
+##  [73]  59  60  52  46  50  54  67  25  20  38  56  61  67  71  63  48  46  60
+##  [91]  29 169  24  26  44  64  43  48  48  34  42  36  31  30  54  58  61  28
+## [109]  53  29  34  43  36  35  39  38  42  43  41  36  34  37  38  46  55  72
+## [127]  77  75  47  28  39  27  49  37  41  50  66  65  51  38  29  43  39  58
+## [145]  44  44  44  44  52  56  63  75  31  34  40  45  43  32  46  62  58  54
+## [163]  46 139  44  43  47  52  55  64  67  71  50  43  50  50  54  51  44  37
+## [181]  43  42  67  41  52  65  77  47  58 100  67  51  58  44  51  64  44  64
+## [199]  45  48  80  46  42  65  39  50  61  77  44  59  68  64  53  37  49  64
+## [217]  43  59  48  74  28  27  38  47  53  53  49  56  75  81  71  58  97  68
+## [235]  53  53  50  52  54  61  66  54  39  31  33  30  36  51  77 119  61  46
+## [253]  45  61 126  64  45  52  64  51  55  70  63  58  56  59  45  70  71  66
+## [271]  84  41  61  35  62  74  57  51  48  51  72  54  48  51  47  49  64  41
+## [289]  36  34  44  61  65  48  49  61 119 119  90  62  53  58  66  53  67  64
+## [307]  48  54  48  58  60  51  52  43  44  44  50  54  80  54  59  51  78  65
+## [325]  47  42  52  60  67  57  51  49  48  37  50  52  49  48  39  74  61  35
+## [343]  35  42  37  43  50  67  52  54  44  57  55  35  40  37  43  36  46  47
+## [361]  58  37  36  40  35  45  41  43  50  74  44  74  49  31  31  37  43  53
+## [379]  35  33  42  58  46  54  45  46  48  35  30  54  51  39  20  19  28  41
+## [397]  60  61  45  38  34  34  24  50  57  24  31  27  45  53  70  73  55  57
+## [415]  36  36  19  38  45  52  71  31  52  53  51  35  37  43  54  65  41  63
+## [433]  70  68  24  33  47  43  71  77  40  36  41  50  34  50  60  60  77  83
+## [451]  32  35  27  42  44  59</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">plot</span>(ts1)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-3-1.png" /><!-- --></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>bexar, <span class="kw">aes</span>(<span class="dt">x=</span>date, <span class="dt">y=</span>AQI))<span class="op">+</span><span class="kw">geom_line</span>()<span class="op">+</span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Bexar County, TX - Air Quality Index&quot;</span>,<span class="dt">subtitle =</span> <span class="st">&quot;January 2019 to March 2020&quot;</span>,</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">       <span class="dt">caption =</span> <span class="st">&quot;Source: EPA Air Data </span><span class="ch">\n</span><span class="st"> Calculations by Corey S. Sparks, Ph.D.&quot;</span>,</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">       <span class="dt">x =</span> <span class="st">&quot;Date&quot;</span>,</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">       <span class="dt">y =</span> <span class="st">&quot;AQI&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-3-2.png" /><!-- --></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">bexar<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(date, AQI)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw">head</span>(<span class="dt">n=</span><span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##          date AQI
+## 1  2020-01-01 106
+## 2  2020-01-02  53
+## 3  2020-01-03  32
+## 4  2020-01-04  38
+## 5  2020-01-05  52
+## 6  2020-01-06  41
+## 7  2020-01-07  41
+## 8  2020-01-08  45
+## 9  2020-01-09  35
+## 10 2020-01-10  42</code></pre>
+</div>
+<div id="bls-unemployment-data" class="section level4">
+<h4>BLS Unemployment data</h4>
+<p>This data set is a time series of monthly unemployment rates from 2000 to 2020. These data are Monthly, so we tell R that their frequency is 12 months (every month is repeated every 12 observations), with start and end dates of January 2000 and June 2020</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co">#Montly unemployment Rate from January 2000 - June, 2020</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">unemp&lt;-unemp[unemp<span class="op">$</span>Series.ID<span class="op">==</span><span class="st">&quot;LNU04000000&quot;</span>,]</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">unemp&lt;-<span class="st"> </span><span class="kw">t</span>(unemp[<span class="op">-</span><span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">unemp&lt;-unemp[<span class="kw">is.na</span>(unemp)<span class="op">==</span>F]</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">ts2&lt;-<span class="kw">ts</span>(unemp, <span class="dt">start=</span><span class="kw">c</span>(<span class="dv">2000</span>,<span class="dv">1</span>), <span class="dt">end=</span><span class="kw">c</span>(<span class="dv">2020</span>,<span class="dv">6</span>), <span class="dt">freq=</span><span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="kw">library</span>(ggfortify)</a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="kw">autoplot</span>(ts2)<span class="op">+</span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;US Monthly Unemployment Rate&quot;</span>,<span class="dt">subtitle =</span> <span class="st">&quot;January 2000 to June 2020&quot;</span>,</a>
+<a class="sourceLine" id="cb15-12" data-line-number="12">       <span class="dt">caption =</span> <span class="st">&quot;Source: EPA Air Data </span><span class="ch">\n</span><span class="st"> Calculations by Corey S. Sparks, Ph.D.&quot;</span>,</a>
+<a class="sourceLine" id="cb15-13" data-line-number="13">       <span class="dt">x =</span> <span class="st">&quot;Date&quot;</span>,</a>
+<a class="sourceLine" id="cb15-14" data-line-number="14">       <span class="dt">y =</span> <span class="st">&quot;Unemployment Rate&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-4-1.png" /><!-- --></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">unemp2&lt;-<span class="kw">data.frame</span>(<span class="dt">rate=</span>unemp, <span class="dt">date=</span><span class="kw">seq</span>(<span class="dt">from=</span><span class="kw">as.Date</span>(<span class="st">&quot;2000-01-01&quot;</span>), <span class="dt">to=</span><span class="kw">as.Date</span>(<span class="st">&quot;2020-06-01&quot;</span>), <span class="dt">by=</span><span class="st">&quot;months&quot;</span>))</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw">head</span>(unemp2, <span class="dt">n=</span><span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##    rate       date
+## 1   4.5 2000-01-01
+## 2   4.4 2000-02-01
+## 3   4.3 2000-03-01
+## 4   3.7 2000-04-01
+## 5   3.8 2000-05-01
+## 6   4.1 2000-06-01
+## 7   4.2 2000-07-01
+## 8   4.1 2000-08-01
+## 9   3.8 2000-09-01
+## 10  3.6 2000-10-01</code></pre>
+</div>
+<div id="fake-data-example---white-noise" class="section level4">
+<h4>Fake data example - White noise</h4>
+<p>White noise can be though of as a random variable with no discernible trend or pattern to them. They are typically thought of as a random Gaussian variable. If we did a histogram of it, it would be a nice, pretty mound shaped, symmetric distribution.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1115</span>)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">x&lt;-<span class="kw">rnorm</span>(<span class="dv">200</span>)</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw">plot</span>(x, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">main=</span><span class="st">&quot;White Noise&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-5-1.png" /><!-- --></p>
+</div>
+<div id="more-fake-data---random-walk-with-drift" class="section level3">
+<h3>More fake data - Random walk with drift</h3>
+<p>Another type of random pattern are random walks. These are cumulative sums of random variables. They can increase or decrease over time, but they are only doing so based on recent previous events and their values.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">w&lt;-<span class="kw">rnorm</span>(<span class="dv">200</span>); x=<span class="kw">cumsum</span>(w)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">wd&lt;-<span class="st"> </span>w<span class="fl">+.2</span>; xd=<span class="kw">cumsum</span>(wd)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="kw">plot.ts</span>(xd, <span class="dt">main =</span> <span class="st">&quot;Random Walk with Drift&quot;</span>, <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="op">-</span><span class="dv">30</span>, <span class="dv">40</span>))</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="kw">lines</span>(x, <span class="dt">col=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="kw">abline</span>(<span class="dt">h=</span><span class="dv">0</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-6-1.png" /><!-- --></p>
+</div>
+<div id="signal-and-noise" class="section level3">
+<h3>Signal and Noise</h3>
+<p>Often in time series data, we will have a noisy series, meaning that there is an underlying signal that we want to describe, but there is random white noise that accompanies it. Below, we simulate a cosine curve and add a small amount and a large amount of noise to it. With a small amount of noise, the signal is still visible, but with a large amount of random variation, the signal becomes almost indiscernible.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">t&lt;-<span class="dv">1</span><span class="op">:</span><span class="dv">200</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">c&lt;-<span class="dv">2</span><span class="op">*</span><span class="kw">cos</span>(<span class="dv">2</span><span class="op">*</span>pi<span class="op">*</span>t<span class="op">/</span><span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">w&lt;-<span class="kw">rnorm</span>(<span class="dv">200</span>)</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">ts3&lt;-<span class="kw">ts</span>(c<span class="op">+</span>w)</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="kw">plot.ts</span>(c, <span class="dt">main=</span><span class="st">&quot;signal&quot;</span>)</a>
+<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="kw">plot.ts</span>(c<span class="op">+</span>w, <span class="dt">main=</span><span class="st">&quot;signal+ low noise&quot;</span>)</a>
+<a class="sourceLine" id="cb20-9" data-line-number="9"><span class="kw">plot.ts</span>(c<span class="op">+</span><span class="dv">5</span><span class="op">*</span>w,  <span class="dt">main=</span><span class="st">&quot;signal + large noise&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-7-1.png" /><!-- --></p>
+</div>
+<div id="some-terminology" class="section level3">
+<h3>Some terminology</h3>
+<ul>
+<li>lag = a value of the time series that occurs at some regular interval before the current value. For example, if this is our series:</li>
+</ul>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">x1&lt;-<span class="kw">rnorm</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">x1</a></code></pre></div>
+<pre><code>##  [1]  0.76023965  0.11379658  1.81570396 -0.59960278  0.07340230  0.30721595
+##  [7] -0.09357193 -1.83498487  0.44271755  0.05858398</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">lag</span>(x1, <span class="dv">1</span>) <span class="co">#first lag</span></a></code></pre></div>
+<pre><code>##  [1]          NA  0.76023965  0.11379658  1.81570396 -0.59960278  0.07340230
+##  [7]  0.30721595 -0.09357193 -1.83498487  0.44271755</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">lag</span>(x1, <span class="dv">5</span>) <span class="co">#fifth lag</span></a></code></pre></div>
+<pre><code>##  [1]         NA         NA         NA         NA         NA  0.7602397
+##  [7]  0.1137966  1.8157040 -0.5996028  0.0734023</code></pre>
+<ul>
+<li>Trend = increase or decrease in the mean of a variable, often over the long term. For example, this variable should have no trend:</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">x2&lt;-<span class="kw">rnorm</span>(<span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="kw">plot</span>(x2)</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="kw">lines</span>(<span class="kw">ksmooth</span>(<span class="dt">y=</span>x2,<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x2), <span class="st">&quot;normal&quot;</span>, <span class="dt">bandwidth=</span><span class="dv">5</span>), <span class="dt">col=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-9-1.png" /><!-- --></p>
+<p>While this one increases over time:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">b0&lt;-<span class="dv">0</span>; b1=.<span class="dv">5</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">t&lt;-<span class="kw">seq</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">x3&lt;-<span class="kw">rnorm</span>(<span class="dv">100</span>, b0<span class="op">+</span>b1<span class="op">*</span>t, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">tx3&lt;-<span class="kw">ts</span>(x3)</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="kw">plot</span>(tx3)</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6"><span class="kw">abline</span>(<span class="dt">coef=</span><span class="kw">coef</span>(<span class="kw">lm</span>(x3<span class="op">~</span>t)), <span class="dt">col=</span><span class="dv">3</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-10-1.png" /><!-- --></p>
+<ul>
+<li>Seasonality = This is a regular pattern of variation in a time series. It is a patter that repeats (like the cosine wave above) at a regular pattern within the data.</li>
+</ul>
+</div>
+<div id="auto-correlation-in-time-series" class="section level3">
+<h3>Auto-correlation in Time Series</h3>
+<p>Auto-correlation of a time series is <span class="math inline">\(\gamma (h)\)</span> measures how correlated a time series is with different lags of itself.</p>
+<p><span class="math display">\[\gamma (h) = E[(x_{t+h} - \mu)(x_t - \mu)\]</span></p>
+<p><span class="math display">\[\rho(h) = \frac{\gamma(t+h,t)}{\sqrt{\gamma(t+h,t+h)\gamma(t,t) )}} = \frac{\gamma(h)}{\gamma(0)}\]</span></p>
+<p>shows the correlation of a variable with itself at a given time lag <span class="math inline">\(h\)</span>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">acf</span>(ts1, <span class="dt">main=</span><span class="st">&quot;ACF of Air Quality Data&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-11-1.png" /><!-- --></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">acf</span>(ts2, <span class="dt">main=</span><span class="st">&quot;ACF of Unemployment Data&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-11-2.png" /><!-- --></p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">acf</span>(ts3, <span class="dt">main=</span><span class="st">&quot;ACF of Noisy Cosine Wave data&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-11-3.png" /><!-- --></p>
+</div>
+<div id="stationary-time-series" class="section level3">
+<h3>Stationary Time Series</h3>
+<p>A stationary time series is one that has no trend to it, in other words, the mean of the variable doesn’t change over the range of the observation. A second quality of a secondary series is that its variance is constant over time. The white noise data from above is stationary</p>
+<p>We can often detect trend by using the linear regression model, with time as the predictor</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">fit1&lt;-<span class="kw">lm</span>(AQI<span class="op">~</span>date, <span class="dt">data=</span>bexar); <span class="kw">summary</span>(fit1) <span class="co">#negative trend</span></a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = AQI ~ date, data = bexar)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -35.561 -10.856  -1.901   9.003 114.077 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 473.796162 109.026847   4.346 1.71e-05 ***
+## date         -0.023405   0.006015  -3.891 0.000115 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 16.91 on 454 degrees of freedom
+## Multiple R-squared:  0.03227,    Adjusted R-squared:  0.03014 
+## F-statistic: 15.14 on 1 and 454 DF,  p-value: 0.0001148</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x=</span>bexar<span class="op">$</span>date, <span class="dt">y=</span>bexar<span class="op">$</span>AQI)</a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="kw">abline</span>(<span class="kw">coef</span>(fit1), <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-12-1.png" /><!-- --></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">fit2&lt;-<span class="kw">lm</span>(rate<span class="op">~</span>date, <span class="dt">data=</span>unemp2); <span class="kw">summary</span>(fit2) <span class="co">#no trend</span></a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = rate ~ date, data = unemp2)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.7887 -1.4043 -0.5443  1.0016  8.3051 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 5.341e+00  8.687e-01   6.149 3.17e-09 ***
+## date        4.106e-05  5.853e-05   0.702    0.484    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.984 on 244 degrees of freedom
+## Multiple R-squared:  0.002013,   Adjusted R-squared:  -0.002077 
+## F-statistic: 0.4922 on 1 and 244 DF,  p-value: 0.4836</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x=</span>unemp2<span class="op">$</span>date, <span class="dt">y=</span>unemp2<span class="op">$</span>rate)</a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw">abline</span>(<span class="kw">coef</span>(fit2), <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-12-2.png" /><!-- --></p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">fit3&lt;-<span class="kw">lm</span>(ts3<span class="op">~</span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">length</span>(ts3), <span class="dv">1</span>)); <span class="kw">summary</span>(fit3) <span class="co">#no trend</span></a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = ts3 ~ seq(1, length(ts3), 1))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.7708 -1.1880  0.0631  1.3104  3.8297 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)             0.0423797  0.2297245   0.184    0.854
+## seq(1, length(ts3), 1) -0.0005129  0.0019820  -0.259    0.796
+## 
+## Residual standard error: 1.618 on 198 degrees of freedom
+## Multiple R-squared:  0.0003381,  Adjusted R-squared:  -0.004711 
+## F-statistic: 0.06697 on 1 and 198 DF,  p-value: 0.7961</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x=</span><span class="kw">seq</span>(<span class="dv">1</span>, <span class="kw">length</span>(ts3), <span class="dv">1</span>), <span class="dt">y=</span>(c<span class="op">+</span>w))</a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="kw">abline</span>(<span class="kw">coef</span>(fit3), <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-12-3.png" /><!-- --></p>
+</div>
+<div id="non-stationary-time-series" class="section level3">
+<h3>Non-stationary time series</h3>
+<p>A complement to the stationary series is a non-stationary series, which has a global trend to it, in that it increases or decreases in value over time</p>
+</div>
+<div id="removing-trend-in-a-series" class="section level3">
+<h3>Removing trend in a series</h3>
+<p>Often we want to be able to measure auto-correlation without the trend being present, in that case, we can <em>de-trend</em> the data and make the series a stationary series.</p>
+<p>If <span class="math inline">\(x_t\)</span> is our time series, we can write it as being a sum of two things, the trend, <span class="math inline">\(\mu_t\)</span> and <span class="math inline">\(y_t\)</span> which is the stationary component.</p>
+<p><span class="math display">\[x_t = \mu_t + y_t\]</span> If the trend is a straight line, then we may have</p>
+<p><span class="math display">\[\mu_t = \beta_0 + \beta_1 t\]</span> which is just a linear regression, and in this case, the stationary component <span class="math inline">\(y_t\)</span> will be the residuals from the model:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">fit1&lt;-<span class="kw">lm</span>(AQI<span class="op">~</span>date, <span class="dt">data=</span>bexar); <span class="kw">summary</span>(fit1) <span class="co">#negative trend</span></a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = AQI ~ date, data = bexar)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -35.561 -10.856  -1.901   9.003 114.077 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 473.796162 109.026847   4.346 1.71e-05 ***
+## date         -0.023405   0.006015  -3.891 0.000115 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 16.91 on 454 degrees of freedom
+## Multiple R-squared:  0.03227,    Adjusted R-squared:  0.03014 
+## F-statistic: 15.14 on 1 and 454 DF,  p-value: 0.0001148</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x=</span>bexar<span class="op">$</span>date, <span class="dt">y=</span>bexar<span class="op">$</span>AQI)</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="kw">abline</span>(<span class="kw">coef</span>(fit1), <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lwd=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-13-1.png" /><!-- --></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x=</span>bexar<span class="op">$</span>date, <span class="dt">y=</span><span class="kw">resid</span>(fit1), <span class="dt">main=</span> <span class="st">&quot;De trended time series of air quality&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-13-2.png" /><!-- --></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">acf</span>(<span class="kw">resid</span>(fit1))</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-13-3.png" /><!-- --></p>
+</div>
+<div id="differencing-a-time-series" class="section level3">
+<h3>Differencing a time series</h3>
+<p>A way to remove seasonality in a time series is by <em>differencing</em> the series. The difference operation is:</p>
+<p><span class="math display">\[\nabla^d = (1-B)^d\]</span></p>
+<p>This is just the difference between the value of <span class="math inline">\(x_t\)</span> and the value that occurs <span class="math inline">\(d\)</span> values prior. For example, the <em>first difference</em> is often taken to remove seasonality in a series:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">x&lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2">x</a></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw">diff</span>(x)</a></code></pre></div>
+<pre><code>## [1] 1 1 1 1 1 1 1 1 1</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">x&lt;-c<span class="op">+</span>w</a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="kw">plot</span>(x)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-14-1.png" /><!-- --></p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">diff</span>(x))</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-14-2.png" /><!-- --> We see that the second plot no longer has the regular cosine wave pattern to it.</p>
+</div>
+</div>
+<div id="smoothing-a-time-series" class="section level2">
+<h2>Smoothing a time series</h2>
+<p>One descriptive technique that is commonly used in time series analysis is a smoothing model for the data. There are several kinds of these and we will look at a few next.</p>
+<div id="moving-average-of-time-series" class="section level3">
+<h3>Moving Average of Time Series</h3>
+<p>The moving average of a time series is:</p>
+<p><span class="math display">\[ m_t = \sum_{j=-k}^k \alpha_j x_{t-j}\]</span> This function takes a set of the <span class="math inline">\(k\)</span> observations, centered around <span class="math inline">\(x_t\)</span> and finds the mean of them. You’ve probably seen a lot of these during the <a href="https://coronavirus.jhu.edu/data/new-cases">COVID-19 pandemic</a></p>
+<p>The reason we do this is to try to identify the systematic component or components in the data. If the data are noisy, like the cosine data above:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">plot.ts</span>(c<span class="op">+</span><span class="dv">5</span><span class="op">*</span>w,  <span class="dt">main=</span><span class="st">&quot;signal + large noise&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-15-1.png" /><!-- --></p>
+<p>If we take a moving average of the series, we may be able to identify the signal in the noise:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">plot</span>(c<span class="op">+</span><span class="dv">5</span><span class="op">*</span>w,  <span class="dt">main=</span><span class="st">&quot;signal + large noise&quot;</span>)</a>
+<a class="sourceLine" id="cb53-2" data-line-number="2">x=c<span class="op">+</span><span class="dv">5</span><span class="op">*</span>w</a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="kw">lines</span>(c, <span class="dt">col=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb53-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="kw">lines</span>(<span class="kw">ma</span>(x, <span class="dt">order=</span><span class="dv">5</span>), <span class="dt">col=</span><span class="dv">2</span>)<span class="co">#5 day moving average</span></a>
+<a class="sourceLine" id="cb53-6" data-line-number="6"><span class="kw">lines</span>(<span class="kw">ma</span>(x, <span class="dt">order=</span><span class="dv">20</span>), <span class="dt">col=</span><span class="dv">3</span>)<span class="co">#20 day moving average</span></a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-16-1.png" /><!-- --></p>
+<div id="kernel-smoothing" class="section level4">
+<h4>Kernel smoothing</h4>
+<p>Another modern approach is to use a smoothing spline or kernel-based smoother, which</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw">plot</span>(c<span class="op">+</span><span class="dv">5</span><span class="op">*</span>w,  <span class="dt">main=</span><span class="st">&quot;signal + large noise&quot;</span>)</a>
+<a class="sourceLine" id="cb54-2" data-line-number="2">x=c<span class="op">+</span><span class="dv">5</span><span class="op">*</span>w</a>
+<a class="sourceLine" id="cb54-3" data-line-number="3">t&lt;-<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb54-4" data-line-number="4"><span class="kw">lines</span>(c, <span class="dt">col=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb54-5" data-line-number="5"><span class="kw">lines</span>(<span class="kw">ksmooth</span>(<span class="dt">x=</span>t, <span class="dt">y=</span>x, <span class="st">&quot;normal&quot;</span>, <span class="dt">bandwidth=</span><span class="dv">5</span>), <span class="dt">col=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb54-6" data-line-number="6"><span class="kw">lines</span>(<span class="kw">ksmooth</span>(<span class="dt">x=</span>t, <span class="dt">y=</span>x, <span class="st">&quot;normal&quot;</span>, <span class="dt">bandwidth=</span><span class="dv">10</span>), <span class="dt">col=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb54-7" data-line-number="7"><span class="kw">lines</span>(<span class="kw">ksmooth</span>(<span class="dt">x=</span>t, <span class="dt">y=</span>x, <span class="st">&quot;normal&quot;</span>, <span class="dt">bandwidth=</span><span class="dv">20</span>), <span class="dt">col=</span><span class="dv">4</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-17-1.png" /><!-- --></p>
+</div>
+<div id="smoothing-splines" class="section level4">
+<h4>Smoothing splines</h4>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw">plot</span>(c<span class="op">+</span><span class="dv">5</span><span class="op">*</span>w,  <span class="dt">main=</span><span class="st">&quot;signal + large noise&quot;</span>)</a>
+<a class="sourceLine" id="cb55-2" data-line-number="2">x=c<span class="op">+</span><span class="dv">5</span><span class="op">*</span>w</a>
+<a class="sourceLine" id="cb55-3" data-line-number="3">t&lt;-<span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb55-4" data-line-number="4"><span class="kw">lines</span>(c, <span class="dt">col=</span><span class="dv">1</span>, <span class="dt">lty=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb55-5" data-line-number="5"><span class="kw">lines</span>(<span class="kw">smooth.spline</span>(<span class="dt">x=</span>t, <span class="dt">y=</span>x, <span class="dt">spar=</span><span class="dv">1</span>), <span class="dt">col=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb55-6" data-line-number="6"><span class="kw">lines</span>(<span class="kw">smooth.spline</span>(<span class="dt">x=</span>t, <span class="dt">y=</span>x, <span class="dt">spar=</span>.<span class="dv">5</span>), <span class="dt">col=</span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb55-7" data-line-number="7"><span class="kw">lines</span>(<span class="kw">smooth.spline</span>(<span class="dt">x=</span>t, <span class="dt">y=</span>x, <span class="dt">spar=</span>.<span class="dv">01</span>), <span class="dt">col=</span><span class="dv">4</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-18-1.png" /><!-- --></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="co">#lines(ksmooth(x=t, y=x, &quot;normal&quot;, bandwidth=10), col=3)</span></a>
+<a class="sourceLine" id="cb56-2" data-line-number="2"><span class="co">#lines(ksmooth(x=t, y=x, &quot;normal&quot;, bandwidth=20), col=4)</span></a></code></pre></div>
+</div>
+</div>
+</div>
+<div id="arima-models" class="section level2">
+<h2>ARIMA Models</h2>
+<p>One of the fundamental models in time series analysis is the <em>A</em>uto<em>R</em>egressive <em>I</em>ntegrated <em>M</em>oving <em>A</em>verage</p>
+<p>An auto-regressive model is one that predicts a future value, based on weighted average of previous values. The weights will decrease as the distance in time between the current and past values increase.</p>
+<p>An auto-regressive model of order <em>p</em>, abbreviated <strong>AR(p)</strong> is:</p>
+<p><span class="math display">\[x_t = \phi_1 x_{t-1} + \phi_2 x_{t-2}  + \dots +\phi_p x_{t-p} + w_t\]</span> where, the <span class="math inline">\(\phi_p\)</span> terms represent auto-regressive coefficients and where <span class="math inline">\(w_t\)</span> is a Gaussian white noise residual. The auto-regressive operation can be more succinctly defined using the <em>Backshift operator</em></p>
+<p><span class="math display">\[Bx_t = x_{t-1}\]</span></p>
+<p>and we can power this operator up to include greater lags of <span class="math inline">\(x_t\)</span></p>
+<p><span class="math display">\[B^k x_t  = x_{t-k}\]</span></p>
+<p>A commonly used model when modeling temporal dependence is that <em>AR(1)</em> model, where the current value of <span class="math inline">\(x\)</span> is predicted using the immediately preceding value:</p>
+<p><span class="math display">\[x_t = \sum_{j=0}^\infty \phi^j w_{t-j}\]</span></p>
+<div id="moving-average-models" class="section level4">
+<h4>Moving average models</h4>
+<p>The moving average model of order <em>q</em>, or <strong>MA(q)</strong> is :</p>
+<p><span class="math display">\[x_t = w_t + \theta_1 w_{t-1} + \theta_2 w_{t-2} + \dots + \theta_q w_{t-q}\]</span> where the <span class="math inline">\(\theta\)</span> values are lags of the series, of order <span class="math inline">\(q\)</span> and <span class="math inline">\(w_t\)</span> is again Gaussian white noise.</p>
+</div>
+<div id="arma-process" class="section level4">
+<h4>ARMA process</h4>
+<p>If we combine these two, we get an <em>A</em>uto<em>R</em>egressive <em>M</em>oving <em>A</em>verage, or <strong>ARMA(p,q)</strong> model.</p>
+<p><span class="math display">\[x_t = \alpha + \phi_1 x_{t-1} + \phi_2 x_{t-2}  + \dots +\phi_p x_{t-p} + w_t + \theta_1 w_{t-1} + \theta_2 w_{t-2} + \dots + \theta_q w_{t-q} \]</span></p>
+<p>Which just combines the auto-regression and the moving average models.</p>
+</div>
+<div id="arima-models-1" class="section level3">
+<h3>ARIMA models</h3>
+<p>If we add a trend component to the time series model, we get the <strong>ARIMA(p,d,q)</strong> model</p>
+</div>
+</div>
+<div id="forecasting" class="section level2">
+<h2>Forecasting</h2>
+<p>Forecasting is the process of predicting future values of a variable, based on the observed patterns of the variable from the past. If we have the observed time series, <span class="math inline">\(x_t\)</span>, then we may want to predict future values of the series at <span class="math inline">\(m\)</span> periods in the future, <span class="math inline">\(x_{n+m}\)</span></p>
+<p>In order to do this, we assume that <span class="math inline">\(x_t\)</span> is stationary and the model parameters are known (but we typically estimate them from the data).</p>
+<p>For example, if we want to forecast the air quality in Bexar County in the future, we would first estimate the parameters of the model we want, then apply that model to forecast the future values.</p>
+<p>The <code>forecast</code> package is a great place to start for basic forecasting models.</p>
+<p>Below are some simple methods, see <a href="https://otexts.com/fpp2/simple-methods.html">Hyndmans’s ch 3 for these</a></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw">library</span>(forecast)</a>
+<a class="sourceLine" id="cb57-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb57-3" data-line-number="3"><span class="co">#Simple mean forecast</span></a>
+<a class="sourceLine" id="cb57-4" data-line-number="4"><span class="kw">plot</span>(<span class="kw">meanf</span>(ts1, <span class="dt">h=</span><span class="dv">60</span>))</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-19-1.png" /><!-- --></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="co">#Naive method - same as the last observation</span></a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="kw">plot</span>(<span class="kw">naive</span>(ts1, <span class="dt">h=</span><span class="dv">60</span>))</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-19-2.png" /><!-- --></p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="kw">plot</span>(<span class="kw">rwf</span>(ts1, <span class="dt">h=</span><span class="dv">60</span>))</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-19-3.png" /><!-- --></p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="kw">autoplot</span>(ts1)<span class="op">+</span></a>
+<a class="sourceLine" id="cb60-2" data-line-number="2"><span class="st">  </span><span class="kw">autolayer</span>(<span class="kw">ma</span>(ts1, <span class="dv">30</span>), <span class="dt">series=</span><span class="st">&quot;30 day MA&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb60-3" data-line-number="3"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Day&quot;</span>)<span class="op">+</span><span class="kw">ylab</span>(<span class="st">&quot;AQI&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb60-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Air Quality in Bexar county, 30 Day moving average&quot;</span>)</a></code></pre></div>
+<pre><code>## Warning: Removed 30 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-19-4.png" /><!-- --> ## ARIMA forecasting</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1">ts2 <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">stl</span>(<span class="dt">s.window=</span><span class="st">&#39;periodic&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">seasadj</span>() -&gt;<span class="st"> </span>unemp3</a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="kw">autoplot</span>(unemp3)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-20-1.png" /><!-- --></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="co">#first differnce</span></a>
+<a class="sourceLine" id="cb63-2" data-line-number="2">unemp3<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">diff</span>() <span class="op">%&gt;%</span><span class="kw">ggtsdisplay</span>(<span class="dt">main=</span><span class="st">&quot;First difference&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-20-2.png" /><!-- --></p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="co">#automatically estimate the model parameters</span></a>
+<a class="sourceLine" id="cb64-2" data-line-number="2">fit&lt;-<span class="kw">auto.arima</span>(ts2)</a>
+<a class="sourceLine" id="cb64-3" data-line-number="3">fit</a></code></pre></div>
+<pre><code>## Series: ts2 
+## ARIMA(0,1,0)(0,0,2)[12] 
+## 
+## Coefficients:
+##         sma1    sma2
+##       0.3592  0.2814
+## s.e.  0.1534  0.1252
+## 
+## sigma^2 estimated as 0.5148:  log likelihood=-266.77
+## AIC=539.55   AICc=539.65   BIC=550.05</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw">autoplot</span>(<span class="kw">forecast</span>(fit))</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-20-3.png" /><!-- --></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1">fit2&lt;-<span class="kw">auto.arima</span>(unemp3)</a>
+<a class="sourceLine" id="cb67-2" data-line-number="2"><span class="kw">autoplot</span>(<span class="kw">forecast</span>(fit2))</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-20-4.png" /><!-- --></p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1">fit2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb68-2" data-line-number="2"><span class="st">  </span><span class="kw">forecast</span>(<span class="dt">h=</span><span class="dv">12</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb68-3" data-line-number="3"><span class="st">  </span><span class="kw">autoplot</span>(<span class="dt">main=</span><span class="st">&quot;12 month forecast for unemployment&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-20-5.png" /><!-- --></p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1">fit3&lt;-<span class="kw">auto.arima</span>(ts1)</a></code></pre></div>
+<pre><code>## Warning: The chosen seasonal unit root test encountered an error when testing for the first difference.
+## From stl(): series is not periodic or has less than two periods
+## 0 seasonal differences will be used. Consider using a different unit root test.</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1">fit3<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb71-2" data-line-number="2"><span class="st">  </span><span class="kw">forecast</span>(<span class="dt">h=</span><span class="dv">60</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb71-3" data-line-number="3"><span class="st">  </span><span class="kw">autoplot</span>(<span class="dt">main=</span><span class="st">&quot;60 day forecast of AQI&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-20-6.png" /><!-- --></p>
+</div>
+<div id="classical-decomposition" class="section level2">
+<h2>Classical Decomposition</h2>
+<p>One method of exploring the components of a time series is <em>decomposition</em> There are two basic forms of this, <em>Additive</em> and <em>Multiplicative</em> decomposition.</p>
+<ul>
+<li>Additive decomposition decomposes the series as:</li>
+</ul>
+<p><span class="math display">\[x_t = R_t + T_t + S_t\]</span> Where <span class="math inline">\(R_t\)</span> is a residual, <span class="math inline">\(T_t\)</span> is the trend of the data and <span class="math inline">\(S_t\)</span> is the seasonal component of the data</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1">ts2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb72-2" data-line-number="2"><span class="st">  </span><span class="kw">decompose</span>(<span class="dt">type=</span><span class="st">&quot;additive&quot;</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Day&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb72-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Classical additive decomposition</span></a>
+<a class="sourceLine" id="cb72-4" data-line-number="4"><span class="st">    of US Unemployment&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-21-1.png" /><!-- --></p>
+<ul>
+<li>Multiplicative decomposition: The second form of decomposition is multiplicative, this decomposes the series as:</li>
+</ul>
+<p><span class="math display">\[x_t = R_t * T_t * S_t\]</span></p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">ts2<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb73-2" data-line-number="2"><span class="st">  </span><span class="kw">decompose</span>(<span class="dt">type=</span><span class="st">&quot;multiplicative&quot;</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">autoplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Day&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb73-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Classical multiplicative decomposition</span></a>
+<a class="sourceLine" id="cb73-4" data-line-number="4"><span class="st">    of US Unemployment&quot;</span>)</a></code></pre></div>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-22-1.png" /><!-- --></p>
+<div id="seasonal-adjustment" class="section level3">
+<h3>Seasonal adjustment</h3>
+<p>In unemployment data, the BLS usually presents the <em>seasonally adjusted</em> unemployment rate. This is because there is seasonality in the pattern of unemployment, with some months consistently having higher or lower unemployment. To produce this, they take the series and subtract out the seasonal component, as in the above decomposition.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1">adjust1&lt;-<span class="kw">decompose</span>(ts2,<span class="dt">type =</span>  <span class="st">&quot;add&quot;</span>)</a>
+<a class="sourceLine" id="cb74-2" data-line-number="2">adjust2&lt;-ts2 <span class="op">-</span><span class="st"> </span>adjust1<span class="op">$</span>seasonal</a>
+<a class="sourceLine" id="cb74-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb74-4" data-line-number="4">test&lt;-<span class="kw">data.frame</span>(<span class="dt">month =</span> <span class="kw">unique</span>(unemp2<span class="op">$</span>date), <span class="dt">unemprate =</span> adjust2)</a>
+<a class="sourceLine" id="cb74-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb74-6" data-line-number="6"><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_line</span>(<span class="dt">data=</span>test, <span class="kw">aes</span>(<span class="dt">x=</span>month, <span class="dt">y=</span>unemprate, <span class="dt">color=</span><span class="st">&quot;green&quot;</span>))<span class="op">+</span><span class="kw">geom_line</span>(<span class="dt">data=</span>unemp2, <span class="kw">aes</span>(<span class="dt">x=</span>date, <span class="dt">y=</span>rate, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>) )<span class="op">+</span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Seasonally Adjusted Unemployment Rate&quot;</span>,</a>
+<a class="sourceLine" id="cb74-7" data-line-number="7">       <span class="dt">subtitle =</span> <span class="st">&quot;Jan 2000 to June 2020&quot;</span>,</a>
+<a class="sourceLine" id="cb74-8" data-line-number="8">       <span class="dt">caption =</span> <span class="st">&quot;Source: IPUMS BLS Monthly Data </span><span class="ch">\n</span><span class="st"> Calculations by Corey S. Sparks, Ph.D.&quot;</span>,</a>
+<a class="sourceLine" id="cb74-9" data-line-number="9">       <span class="dt">x =</span> <span class="st">&quot;Month&quot;</span>,</a>
+<a class="sourceLine" id="cb74-10" data-line-number="10">       <span class="dt">y =</span> <span class="st">&quot;Unemployment Rate&quot;</span>)<span class="op">+</span><span class="kw">theme_minimal</span>()<span class="op">+</span><span class="kw">scale_color_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Rates&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Adjusted&quot;</span>, <span class="st">&quot;Raw&quot;</span>))</a></code></pre></div>
+<pre><code>## Don&#39;t know how to automatically pick scale for object of type ts. Defaulting to continuous.</code></pre>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-23-1.png" /><!-- --></p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1">adjust3&lt;-ts2 <span class="op">-</span><span class="st"> </span>adjust1<span class="op">$</span>trend</a>
+<a class="sourceLine" id="cb76-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb76-3" data-line-number="3">test&lt;-<span class="kw">data.frame</span>(<span class="dt">month =</span> <span class="kw">unique</span>(unemp2<span class="op">$</span>date), <span class="dt">unemprate =</span> adjust3)</a>
+<a class="sourceLine" id="cb76-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb76-5" data-line-number="5"><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_line</span>(<span class="dt">data=</span>test, <span class="kw">aes</span>(<span class="dt">x=</span>month, <span class="dt">y=</span>unemprate, <span class="dt">color=</span><span class="st">&quot;green&quot;</span>))<span class="op">+</span><span class="kw">geom_line</span>(<span class="dt">data=</span>unemp2, <span class="kw">aes</span>(<span class="dt">x=</span>date, <span class="dt">y=</span>rate, <span class="dt">color=</span><span class="st">&quot;red&quot;</span>) )<span class="op">+</span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Detrended Unemployment Rate&quot;</span>,</a>
+<a class="sourceLine" id="cb76-6" data-line-number="6">       <span class="dt">subtitle =</span> <span class="st">&quot;Jan 2000 to June 2020&quot;</span>,</a>
+<a class="sourceLine" id="cb76-7" data-line-number="7">       <span class="dt">caption =</span> <span class="st">&quot;Source: IPUMS BLS Monthly Data </span><span class="ch">\n</span><span class="st"> Calculations by Corey S. Sparks, Ph.D.&quot;</span>,</a>
+<a class="sourceLine" id="cb76-8" data-line-number="8">       <span class="dt">x =</span> <span class="st">&quot;Month&quot;</span>,</a>
+<a class="sourceLine" id="cb76-9" data-line-number="9">       <span class="dt">y =</span> <span class="st">&quot;Unemployment Rate&quot;</span>)<span class="op">+</span><span class="kw">theme_minimal</span>()<span class="op">+</span><span class="kw">scale_color_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Rates&quot;</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Adjusted&quot;</span>, <span class="st">&quot;Raw&quot;</span>))</a></code></pre></div>
+<pre><code>## Don&#39;t know how to automatically pick scale for object of type ts. Defaulting to continuous.</code></pre>
+<pre><code>## Warning: Removed 12 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="IntroTimeSeries_files/figure-html/unnamed-chunk-24-1.png" /><!-- --></p>
+</div>
+</div>
+</section>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
