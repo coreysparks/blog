@@ -142,12 +142,12 @@ This is great, but typically it's easier to understand the model's predictive ab
 
 This provides lots of output summarizing the classification results. At its core is the matrix of observed classes versus predicted classes. I got one depiction of this [here](https://www.geeksforgeeks.org/confusion-matrix-machine-learning/) and from the [Wikipedia page](https://en.wikipedia.org/wiki/Confusion_matrix)
 
-![Confusion matrix](C:/Users/ozd504/OneDrive - University of Texas at San Antonio/predictive_workinggroup/images/cm1.PNG)
+<!-- ![Confusion matrix](C:/Users/ozd504/OneDrive - University of Texas at San Antonio/predictive_workinggroup/images/cm1.PNG) -->
 
 Lots of information on the predictive accuracy can be found from this 2x2 table:
 
 
-![Confusion matrix](C:/Users/ozd504/OneDrive - University of Texas at San Antonio/predictive_workinggroup/images/cm2.PNG)
+<!-- ![Confusion matrix](C:/Users/ozd504/OneDrive - University of Texas at San Antonio/predictive_workinggroup/images/cm2.PNG) -->
 
 Generally, we are interested in overall accuracy, sensitivity and specificity. 
 
