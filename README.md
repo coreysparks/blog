@@ -41,7 +41,7 @@ More information can be found [there](https://github.com/privefl/prettyjekyll#re
 
 ## An example
 
-You can see for example the blog part of [my own website](https://privefl.github.io/).
+You can see for example the blog part of [my own website](https://coreysparks.github.io/blog).
 
 For example, 
 
