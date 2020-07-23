@@ -220,10 +220,10 @@ layout: post
 <a class="sourceLine" id="cb23-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb23-7" data-line-number="7">pred1<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb23-8" data-line-number="8"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">x=</span>pr, <span class="dt">color=</span>gr, <span class="dt">group=</span>gr))<span class="op">+</span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Probability of Modern Contraception&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;Threshold = .5&quot;</span>)</a></code></pre></div>
-<p><img src="Basic-Classification_files/figure-html/unnamed-chunk-8-1.png" /><!-- --></p>
+<p><img src="/knitr_files/Basic-Classification_files/figure-html/unnamed-chunk-8-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">pred1<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">x=</span>pr, <span class="dt">color=</span>modcon, <span class="dt">group=</span>modcon))<span class="op">+</span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Probability of Modern Contraception&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;Truth&quot;</span>)</a></code></pre></div>
-<p><img src="Basic-Classification_files/figure-html/unnamed-chunk-8-2.png" /><!-- --></p>
+<p><img src="/knitr_files/Basic-Classification_files/figure-html/unnamed-chunk-8-2.png" /><!-- --></p>
 <p>Next we need to see how we did. A simple cross tab of the observed classes versus the predicted classes is called the <strong>confusion matrix</strong>.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">table</span>( tr_predcl,model.dat2train<span class="op">$</span>modcontra)</a></code></pre></div>
 <pre><code>##          
@@ -271,10 +271,10 @@ layout: post
 <a class="sourceLine" id="cb29-3" data-line-number="3">pred2&lt;-<span class="kw">data.frame</span>(<span class="dt">pr=</span>tr_pred, <span class="dt">gr=</span>tr_predcl, <span class="dt">modcon=</span>model.dat2train<span class="op">$</span>modcontra)</a>
 <a class="sourceLine" id="cb29-4" data-line-number="4">pred2<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb29-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">x=</span>pr, <span class="dt">color=</span>gr, <span class="dt">group=</span>gr))<span class="op">+</span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Probability of Modern Contraception&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;Threshold = .258&quot;</span>)</a></code></pre></div>
-<p><img src="Basic-Classification_files/figure-html/unnamed-chunk-11-1.png" /><!-- --></p>
+<p><img src="/knitr_files/Basic-Classification_files/figure-html/unnamed-chunk-11-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">pred2<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb30-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">x=</span>pr, <span class="dt">color=</span>modcon, <span class="dt">group=</span>modcon))<span class="op">+</span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Probability of Modern Contraception&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;Truth&quot;</span>)</a></code></pre></div>
-<p><img src="Basic-Classification_files/figure-html/unnamed-chunk-11-2.png" /><!-- --></p>
+<p><img src="/knitr_files/Basic-Classification_files/figure-html/unnamed-chunk-11-2.png" /><!-- --></p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> tr_predcl,model.dat2train<span class="op">$</span>modcontra, <span class="dt">positive =</span> <span class="st">&quot;1&quot;</span> )</a></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
 ## 
@@ -444,7 +444,7 @@ layout: post
 <a class="sourceLine" id="cb39-2" data-line-number="2"><span class="dt">box.palette=</span><span class="st">&quot;GnBu&quot;</span>,</a>
 <a class="sourceLine" id="cb39-3" data-line-number="3"><span class="dt">shadow.col=</span><span class="st">&quot;gray&quot;</span>, </a>
 <a class="sourceLine" id="cb39-4" data-line-number="4"><span class="dt">nn=</span><span class="ot">TRUE</span>, <span class="dt">main=</span><span class="st">&quot;Classification tree for using modern contraception&quot;</span>)</a></code></pre></div>
-<p><img src="Basic-Classification_files/figure-html/unnamed-chunk-14-1.png" /><!-- --></p>
+<p><img src="/knitr_files/Basic-Classification_files/figure-html/unnamed-chunk-14-1.png" /><!-- --></p>
 <p>Each node box displays the classification, the probability of each class at that node (i.e. the probability of the class conditioned on the node) and the percentage of observations used at that node. <a href="https://blog.revolutionanalytics.com/2013/06/plotting-classification-and-regression-trees-with-plotrpart.html">From here</a>.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">predrp1&lt;-<span class="kw">predict</span>(rp1, <span class="dt">newdata=</span>model.dat2train, <span class="dt">type =</span> <span class="st">&quot;class&quot;</span>)</a>
 <a class="sourceLine" id="cb40-2" data-line-number="2"><span class="kw">confusionMatrix</span>(<span class="dt">data =</span> predrp1,model.dat2train<span class="op">$</span>modcontra )</a></code></pre></div>
@@ -531,10 +531,10 @@ layout: post
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1">ld1&lt;-<span class="kw">data.frame</span>(<span class="dt">ppmod=</span> lda1<span class="op">$</span>posterior[, <span class="dv">2</span>],<span class="dt">pred=</span>lda1<span class="op">$</span>class, <span class="dt">real=</span>model.dat2train<span class="op">$</span>modcontra)</a>
 <a class="sourceLine" id="cb49-2" data-line-number="2">ld1<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb49-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ppmod, <span class="dt">group=</span>pred, <span class="dt">color=</span>pred))<span class="op">+</span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Probabilities of class membership on the linear discriminant function&quot;</span>)</a></code></pre></div>
-<p><img src="Basic-Classification_files/figure-html/unnamed-chunk-17-1.png" /><!-- --></p>
+<p><img src="/knitr_files/Basic-Classification_files/figure-html/unnamed-chunk-17-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">ld1<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb50-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">x=</span>ppmod, <span class="dt">group=</span>real, <span class="dt">color=</span>real))<span class="op">+</span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Probabilities of class membership and the real class&quot;</span>)</a></code></pre></div>
-<p><img src="Basic-Classification_files/figure-html/unnamed-chunk-17-2.png" /><!-- --></p>
+<p><img src="/knitr_files/Basic-Classification_files/figure-html/unnamed-chunk-17-2.png" /><!-- --></p>
 <p>Accuracy on the training set</p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">confusionMatrix</span>(pred_ld1,model.dat2train<span class="op">$</span>modcontra )</a></code></pre></div>
 <pre><code>## Confusion Matrix and Statistics
