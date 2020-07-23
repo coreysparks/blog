@@ -228,7 +228,7 @@ varImpPlot(bag.1, n.var = 10, type=1)
 prb2$lowe0<-as.factor(ifelse(prb2$e0total<median(prb2$e0total), "low", "high"))
 
 fit<-tree(lowe0~., data=prb2[train1,-12])
-fit
+#fit
 plot(fit); text(fit, pretty=1)
 
 cv.fit<-cv.tree(fit)
@@ -244,8 +244,8 @@ plot(pt1); text(pt1, pretty=1)
 #Tune to find best number of variables to try
 t1<-tuneRF(y=prb2$e0total, x=prb2[,c(-12,-23)], trace=T, stepFactor = 2, ntreeTry = 1000, plot=T)
 t1
-y<-prb2$e0total[train]
-bag.2<-randomForest(y=y,x=prb2[train,c(-12,-23)],  mtry=14, ntree=500,importance=T)
+y<-prb2$e0total[train1]
+bag.2<-randomForest(y=y,x=prb2[train1,c(-12,-23)],  mtry=14, ntree=500,importance=T)
 bag.2
 plot(bag.2)
 importance(bag.2,scale = T )
