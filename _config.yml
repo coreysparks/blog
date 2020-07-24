@@ -1,7 +1,8 @@
 #
 # This file contains configuration flags to customize your site
 #
-
+plugins:
+  - jekyll-feed
 # Name of your site (displayed in the header)
 name: Corey Sparks R blog
 
