@@ -1,10 +1,9 @@
-# Add a blog to your website in minutes
+# This is my blog site dedicated to examples of the R language for demographic reserach
+I am an associate professor in the [Department of Demography](https://hcap.utsa.edu/demography/) at the [University of Texas at San Antonio](https://utsa.edu) and have used R for more than 20 years. 
 
-This is a template (and tutorial) for creating your blog with R Markdown in minutes.
 
 ## Implementation
-
-This template is mostly based on [Jekyll Now](https://github.com/barryclark/jekyll-now). It adds some adjustments to properly render your posts based on R Markdown files.
+I made this using a template. This template is mostly based on [Jekyll Now](https://github.com/barryclark/jekyll-now). It adds some adjustments to properly render your posts based on R Markdown files.
 I'm no expert in HTML so some lines of code may be useless.
 
 
