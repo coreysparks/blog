@@ -286,7 +286,7 @@ layout: post
 <p>The example above is a single “tree”, if we did this type of analysis a large number of times, then we would end up with a <em>forest</em> of such trees.</p>
 <p><strong>Bagging</strong> is short for <em>bootstrap aggragation</em>. This is a general purpose procedure for reducing the variance in a statistical test, but it is also commonly used in regression tree contexts. How this works in this setting is the data are bootstrapped into a large number of training sets, each of the same size. The regression tree is fit to each of these large number of trees and not pruned. By averaging these bootstrapped trees, the accuracy is actually higher than for a single tree alone.</p>
 <p><strong>Random forests</strong> not only bag the trees, but at each iteration a different set of predictors is chosen from the data, so not only do we arrive at a more accurate bagged tree, but we can also get an idea of how important any particular variable is, based on its averaged Gini impurity across all the trees considered.</p>
-<pre><code>## Warning: Number of logged events: 653</code></pre>
+<pre><code>## Warning: Number of logged events: 651</code></pre>
 </div>
 <div id="simple-example-using-prb-data---regression-tree" class="section level3">
 <h3>simple example using PRB data - Regression tree</h3>
@@ -299,13 +299,12 @@ layout: post
 ## Regression tree:
 ## tree(formula = e0total ~ ., data = prb2[train1, ])
 ## Variables actually used in tree construction:
-## [1] &quot;imr&quot;                      &quot;gnippppercapitausdollars&quot;
-## [3] &quot;percmarwomcontraall&quot;      &quot;cdr&quot;                     
-## Number of terminal nodes:  6 
-## Residual mean deviance:  6.209 = 931.4 / 150 
+## [1] &quot;imr&quot; &quot;cdr&quot;
+## Number of terminal nodes:  7 
+## Residual mean deviance:  6.536 = 973.9 / 149 
 ## Distribution of residuals:
-##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-## -6.77500 -1.54800  0.04167  0.00000  1.45500  8.46700</code></pre>
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  -7.783  -1.300   0.000   0.000   1.750   8.000</code></pre>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">plot</span>(fit); <span class="kw">text</span>(fit, <span class="dt">pretty=</span><span class="dv">1</span>)</a></code></pre></div>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/RandomForests_files/figure-html/unnamed-chunk-10-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">cv.fit&lt;-<span class="kw">cv.tree</span>(fit)</a>
@@ -327,22 +326,22 @@ layout: post
 ##     combine</code></pre>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">1115</span>)</a>
 <a class="sourceLine" id="cb29-2" data-line-number="2">t1&lt;-<span class="kw">tuneRF</span>(<span class="dt">y=</span>prb2<span class="op">$</span>e0total, <span class="dt">x=</span>prb2[,<span class="kw">c</span>(<span class="op">-</span><span class="dv">12</span>,<span class="op">-</span><span class="dv">23</span>)], <span class="dt">trace=</span>T, <span class="dt">stepFactor =</span> <span class="dv">2</span>, <span class="dt">ntreeTry =</span> <span class="dv">1000</span>, <span class="dt">plot=</span>T)</a></code></pre></div>
-<pre><code>## mtry = 7  OOB error = 8.118095 
+<pre><code>## mtry = 7  OOB error = 7.802162 
 ## Searching left ...
-## mtry = 4     OOB error = 9.665603 
-## -0.1906246 0.05 
+## mtry = 4     OOB error = 9.75998 
+## -0.2509328 0.05 
 ## Searching right ...
-## mtry = 14    OOB error = 6.285889 
-## 0.225694 0.05 
-## mtry = 21    OOB error = 5.597356 
-## 0.1095363 0.05</code></pre>
+## mtry = 14    OOB error = 6.484249 
+## 0.1689164 0.05 
+## mtry = 21    OOB error = 5.758013 
+## 0.112 0.05</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/RandomForests_files/figure-html/unnamed-chunk-11-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">t1 <span class="co">#gewt mtry</span></a></code></pre></div>
 <pre><code>##    mtry OOBError
-## 4     4 9.665603
-## 7     7 8.118095
-## 14   14 6.285889
-## 21   21 5.597356</code></pre>
+## 4     4 9.759980
+## 7     7 7.802162
+## 14   14 6.484249
+## 21   21 5.758013</code></pre>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">bag<span class="fl">.1</span>&lt;-<span class="kw">randomForest</span>(e0total<span class="op">~</span>., <span class="dt">data=</span>prb2[train1,<span class="op">-</span><span class="dv">23</span>], <span class="dt">mtry=</span><span class="dv">14</span>, <span class="dt">ntree=</span><span class="dv">100</span>,<span class="dt">importance=</span>T) <span class="co">#mtry = 3; choose 3 variables for each tree</span></a>
 <a class="sourceLine" id="cb33-2" data-line-number="2">bag<span class="fl">.1</span></a></code></pre></div>
 <pre><code>## 
@@ -352,33 +351,33 @@ layout: post
 ##                      Number of trees: 100
 ## No. of variables tried at each split: 14
 ## 
-##           Mean of squared residuals: 4.091862
-##                     % Var explained: 95.51</code></pre>
+##           Mean of squared residuals: 5.190271
+##                     % Var explained: 95.89</code></pre>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">plot</span>(bag<span class="fl">.1</span>)</a></code></pre></div>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/RandomForests_files/figure-html/unnamed-chunk-11-2.png" /><!-- --></p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">importance</span>(bag<span class="fl">.1</span>)</a></code></pre></div>
 <pre><code>##                                     %IncMSE IncNodePurity
-## continent                          2.269836     162.86343
-## population.                        1.775422      30.73619
-## cbr                                2.097861     265.07842
-## cdr                               11.593426    1492.00344
-## rate.of.natural.increase           1.837991      25.75683
-## net.migration.rate                 1.739629      45.93395
-## imr                               18.445930    9088.89573
-## womandlifetimeriskmaternaldeath    2.802115      70.24814
-## tfr                                3.558442    1005.92071
-## percpoplt15                        2.391176     286.44701
-## percpopgt65                        1.781216     102.90831
-## percurban                          2.977822      65.74286
-## percpopinurbangt750k               1.894005      24.38480
-## percpop1549hivaids2007             6.115930     246.77633
-## percmarwomcontraall                3.795208     146.76803
-## percmarwomcontramodern             4.168409      60.88440
-## percppundernourished0204           3.285918      41.41390
-## motorvehper1000pop0005             4.516427     121.07323
-## percpopwaccessimprovedwatersource  2.606777     292.07080
-## gnippppercapitausdollars           8.327125     757.01647
-## popdenspersqkm                     3.197280      36.03056</code></pre>
+## continent                          3.848523     405.32174
+## population.                        2.447108      47.23318
+## cbr                                2.757050     444.96134
+## cdr                               12.544770    2713.17272
+## rate.of.natural.increase           2.419710     156.97416
+## net.migration.rate                 1.669214      51.52248
+## imr                               16.149632   11064.00964
+## womandlifetimeriskmaternaldeath    5.211886    2608.32904
+## tfr                                2.133800     179.19983
+## percpoplt15                        2.913135     486.07099
+## percpopgt65                        4.272992      65.84541
+## percurban                          1.708796      32.93916
+## percpopinurbangt750k               2.316377      43.63507
+## percpop1549hivaids2007             4.479647     493.30197
+## percmarwomcontraall                3.889310      69.80177
+## percmarwomcontramodern             2.990570      51.66386
+## percppundernourished0204           3.274408      42.50857
+## motorvehper1000pop0005             2.482953      31.30377
+## percpopwaccessimprovedwatersource  3.444429      35.62867
+## gnippppercapitausdollars           7.252401     532.61671
+## popdenspersqkm                     2.862772      64.64063</code></pre>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">varImpPlot</span>(bag<span class="fl">.1</span>, <span class="dt">n.var =</span> <span class="dv">10</span>, <span class="dt">type=</span><span class="dv">1</span>)</a></code></pre></div>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/RandomForests_files/figure-html/unnamed-chunk-11-3.png" /><!-- --></p>
 </div>
@@ -393,14 +392,13 @@ layout: post
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">cv.fit&lt;-<span class="kw">cv.tree</span>(fit)</a>
 <a class="sourceLine" id="cb40-2" data-line-number="2">cv.fit</a></code></pre></div>
 <pre><code>## $size
-## [1] 8 7 6 5 4 3 2 1
+## [1] 6 5 4 3 2 1
 ## 
 ## $dev
-## [1] 271.1351 248.2888 248.2888 162.3994 137.9231 131.2372 125.8354 216.9002
+## [1] 141.5133 126.0102 117.9069  92.0370 113.7485 220.3056
 ## 
 ## $k
-## [1]       -Inf   5.028715   5.064431  10.974339  12.958330  16.873544  19.915817
-## [8] 120.720361
+## [1]      -Inf  10.52553  10.71965  14.55516  28.17398 136.27366
 ## 
 ## $method
 ## [1] &quot;deviance&quot;
@@ -417,22 +415,22 @@ layout: post
 <h3>Random forest tree for PRB low life expectancy</h3>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="co">#Tune to find best number of variables to try</span></a>
 <a class="sourceLine" id="cb44-2" data-line-number="2">t1&lt;-<span class="kw">tuneRF</span>(<span class="dt">y=</span>prb2<span class="op">$</span>e0total, <span class="dt">x=</span>prb2[,<span class="kw">c</span>(<span class="op">-</span><span class="dv">12</span>,<span class="op">-</span><span class="dv">23</span>)], <span class="dt">trace=</span>T, <span class="dt">stepFactor =</span> <span class="dv">2</span>, <span class="dt">ntreeTry =</span> <span class="dv">1000</span>, <span class="dt">plot=</span>T)</a></code></pre></div>
-<pre><code>## mtry = 7  OOB error = 8.239673 
+<pre><code>## mtry = 7  OOB error = 7.789191 
 ## Searching left ...
-## mtry = 4     OOB error = 9.474891 
-## -0.149911 0.05 
+## mtry = 4     OOB error = 9.541584 
+## -0.2249776 0.05 
 ## Searching right ...
-## mtry = 14    OOB error = 6.285259 
-## 0.2371955 0.05 
-## mtry = 21    OOB error = 5.622994 
-## 0.105368 0.05</code></pre>
+## mtry = 14    OOB error = 6.142687 
+## 0.2113831 0.05 
+## mtry = 21    OOB error = 5.816884 
+## 0.05303921 0.05</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/RandomForests_files/figure-html/unnamed-chunk-13-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">t1</a></code></pre></div>
 <pre><code>##    mtry OOBError
-## 4     4 9.474891
-## 7     7 8.239673
-## 14   14 6.285259
-## 21   21 5.622994</code></pre>
+## 4     4 9.541584
+## 7     7 7.789191
+## 14   14 6.142687
+## 21   21 5.816884</code></pre>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">y&lt;-prb2<span class="op">$</span>e0total[train1]</a>
 <a class="sourceLine" id="cb48-2" data-line-number="2">bag<span class="fl">.2</span>&lt;-<span class="kw">randomForest</span>(<span class="dt">y=</span>y,<span class="dt">x=</span>prb2[train1,<span class="kw">c</span>(<span class="op">-</span><span class="dv">12</span>,<span class="op">-</span><span class="dv">23</span>)],  <span class="dt">mtry=</span><span class="dv">14</span>, <span class="dt">ntree=</span><span class="dv">500</span>,<span class="dt">importance=</span>T)</a>
 <a class="sourceLine" id="cb48-3" data-line-number="3">bag<span class="fl">.2</span></a></code></pre></div>
@@ -443,142 +441,138 @@ layout: post
 ##                      Number of trees: 500
 ## No. of variables tried at each split: 14
 ## 
-##           Mean of squared residuals: 3.738583
-##                     % Var explained: 95.89</code></pre>
+##           Mean of squared residuals: 5.127008
+##                     % Var explained: 95.94</code></pre>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">plot</span>(bag<span class="fl">.2</span>)</a></code></pre></div>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/RandomForests_files/figure-html/unnamed-chunk-13-2.png" /><!-- --></p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="kw">importance</span>(bag<span class="fl">.2</span>,<span class="dt">scale =</span> T )</a></code></pre></div>
 <pre><code>##                                     %IncMSE IncNodePurity
-## continent                          2.954808     144.80536
-## population.                        3.852641      31.06549
-## cbr                                4.440344     345.60369
-## cdr                               28.070268    1616.18445
-## rate.of.natural.increase           5.604555      34.18756
-## net.migration.rate                 4.429876      69.49061
-## imr                               36.175997    7608.54525
-## womandlifetimeriskmaternaldeath    6.641993     516.59378
-## tfr                                8.553504     983.79420
-## percpoplt15                        4.832211     394.26025
-## percpopgt65                        6.040979     513.43858
-## percurban                          6.528206      41.13121
-## percpopinurbangt750k               5.007982      33.67748
-## percpop1549hivaids2007            12.050956     237.79540
-## percmarwomcontraall                7.826934      84.40631
-## percmarwomcontramodern             5.763017      77.71947
-## percppundernourished0204           8.105739      53.05181
-## motorvehper1000pop0005             9.349534     162.09938
-## percpopwaccessimprovedwatersource  7.075876     371.86846
-## gnippppercapitausdollars          19.317303     734.06247
-## popdenspersqkm                     2.329224      43.96131</code></pre>
+## continent                          8.113739     315.13346
+## population.                        3.491805      47.75376
+## cbr                                4.170075     237.33712
+## cdr                               30.801400    2809.97899
+## rate.of.natural.increase           6.466801     128.37004
+## net.migration.rate                 3.123241      41.33661
+## imr                               33.424467   10939.33769
+## womandlifetimeriskmaternaldeath   11.242490    2433.13138
+## tfr                                3.817190     126.53284
+## percpoplt15                        6.053018     651.77864
+## percpopgt65                        8.185953      79.82232
+## percurban                          5.381906      35.32764
+## percpopinurbangt750k               3.061482      48.14325
+## percpop1549hivaids2007             9.939650     421.01757
+## percmarwomcontraall                6.826742      58.17955
+## percmarwomcontramodern             7.054051      51.61753
+## percppundernourished0204           3.312644      47.19299
+## motorvehper1000pop0005             3.973039      54.94647
+## percpopwaccessimprovedwatersource  4.080611      82.97701
+## gnippppercapitausdollars          15.504913     674.79257
+## popdenspersqkm                     4.588320      58.80380</code></pre>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">varImpPlot</span>(bag<span class="fl">.2</span>, <span class="dt">n.var =</span> <span class="dv">10</span>, <span class="dt">type=</span><span class="dv">2</span>)</a></code></pre></div>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/RandomForests_files/figure-html/unnamed-chunk-13-3.png" /><!-- --></p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1">pred&lt;-<span class="kw">predict</span>(bag<span class="fl">.2</span>, <span class="dt">newdata=</span>prb2[<span class="op">-</span>train1,])</a>
 <a class="sourceLine" id="cb54-2" data-line-number="2"><span class="kw">table</span>(pred, prb2[<span class="op">-</span>train1, <span class="st">&quot;lowe0&quot;</span>])</a></code></pre></div>
 <pre><code>##                   
 ## pred               high low
-##   46.6656333333333    0   1
-##   47.7251333333333    0   1
-##   49.2536333333333    0   1
-##   49.3275             0   1
-##   49.6110333333333    0   1
-##   50.1843666666666    0   1
-##   50.6251333333333    0   1
-##   50.801              0   1
-##   51.0557333333333    0   1
-##   51.6247             0   1
-##   51.8585             0   1
-##   51.8675             0   1
-##   52.0566666666667    0   1
-##   52.1832             0   1
-##   52.7337             0   1
-##   53.2811             0   1
-##   53.7540666666667    0   1
-##   54.9097666666667    0   1
-##   55.2004333333333    0   1
-##   55.3260333333333    0   1
-##   55.8318             0   1
-##   56.0971             0   1
-##   56.3997             0   1
-##   57.7596666666667    0   1
-##   58.0471             0   1
-##   59.4807333333333    0   1
-##   59.5438333333333    0   1
-##   60.3117             0   1
-##   61.442              0   1
-##   61.6305333333333    0   1
-##   61.7954666666666    0   1
-##   62.1143             0   1
-##   62.4237666666667    0   1
-##   63.2694             0   1
-##   63.3806333333333    0   1
-##   64.2302666666667    0   1
-##   65.2924333333333    1   0
-##   65.6079666666667    0   1
-##   68.3030333333333    0   1
-##   69.1163             0   1
-##   69.5113             0   1
-##   70.1129666666667    1   0
-##   70.3709333333333    0   1
-##   70.3967333333334    0   1
-##   70.5020666666667    0   1
-##   70.6010333333333    0   1
-##   70.6525666666667    1   0
-##   70.8530333333333    1   0
-##   70.9198333333334    1   0
-##   71.0154666666666    1   0
-##   71.4921             0   1
-##   71.5503333333333    1   0
-##   71.5525             1   0
-##   71.6756666666667    1   0
-##   71.6914333333333    1   0
-##   71.8249333333333    1   0
-##   71.8958333333333    0   1
-##   71.9161666666667    0   1
-##   71.9698333333333    0   1
-##   72.1064666666666    1   0
-##   72.1897             0   1
-##   72.2075666666667    0   1
-##   72.3068333333333    1   0
-##   72.309              0   1
-##   72.3824             1   0
-##   72.3846666666667    1   0
-##   72.5716666666667    1   0
-##   72.8175666666666    0   1
-##   72.8340666666667    1   0
-##   72.8782             1   0
-##   72.9942333333333    1   0
-##   73.3531333333333    1   0
-##   73.3707             1   0
-##   73.878              1   0
-##   74.0097666666666    1   0
-##   74.5391666666666    1   0
-##   75.0905             1   0
-##   75.4000333333333    1   0
-##   75.5464666666667    1   0
-##   76.1091             1   0
-##   76.3112666666667    1   0
-##   76.3177             1   0
-##   76.4033333333333    1   0
-##   77.3041666666667    1   0
-##   77.3170666666667    1   0
-##   77.4893666666667    1   0
-##   77.5845             1   0
-##   77.6277333333334    1   0
-##   77.7252333333333    1   0
-##   78.0181333333334    1   0
-##   78.3144             1   0
-##   78.5747             1   0
-##   78.6638             1   0
-##   78.9322666666667    1   0
-##   78.9521666666667    1   0
-##   79.3244666666667    1   0
-##   79.3310333333334    1   0
-##   79.3879666666667    1   0
-##   79.5342333333333    1   0
-##   79.5633666666666    1   0
-##   79.9385             1   0
-##   79.9402             1   0
-##   79.9955333333333    1   0</code></pre>
+##   43.9116333333333    0   1
+##   46.2554             0   1
+##   46.6971666666667    0   1
+##   46.8996666666667    0   1
+##   48.5067             0   1
+##   49.0209666666666    0   1
+##   49.2719333333333    0   1
+##   49.63               0   1
+##   49.8501             0   1
+##   49.9107666666667    0   1
+##   50.2087666666666    0   1
+##   50.3383             0   1
+##   50.4601333333333    0   1
+##   50.479              0   1
+##   52.2138             0   1
+##   52.9432333333333    0   1
+##   52.9651             0   1
+##   57.493              0   1
+##   58.0111333333333    0   1
+##   58.9252666666667    0   1
+##   59.0438666666667    0   1
+##   59.0600333333333    0   1
+##   60.1836333333333    0   1
+##   60.5708666666667    0   1
+##   61.0191333333333    0   1
+##   61.5247333333333    0   1
+##   62.9420666666667    0   1
+##   63.4492666666667    0   1
+##   63.4620333333333    0   1
+##   63.5176333333333    0   1
+##   64.1848             0   1
+##   64.6063666666666    0   1
+##   66.7599             0   1
+##   67.3326666666666    0   1
+##   68.4877666666667    0   1
+##   69.2124             0   1
+##   69.5067666666667    1   0
+##   69.8787             0   1
+##   70.2796666666667    0   1
+##   70.5176             0   1
+##   70.5517333333333    1   0
+##   70.7125             1   0
+##   70.805              0   1
+##   71.2856333333334    1   0
+##   71.3414333333333    1   0
+##   71.3880666666667    1   0
+##   71.6605333333333    1   0
+##   71.7564333333333    1   0
+##   71.7668666666667    0   1
+##   71.8388             1   0
+##   71.8765             0   1
+##   72.1625666666667    1   0
+##   72.1743             1   0
+##   72.2219             1   0
+##   72.2382666666667    1   0
+##   72.303              1   0
+##   72.3485             0   1
+##   72.4083666666667    0   1
+##   72.6019             1   0
+##   72.6527             1   0
+##   72.8502             1   0
+##   73.0262             0   1
+##   73.0343333333333    1   0
+##   73.0405666666667    1   0
+##   73.0917666666667    1   0
+##   73.1843             1   0
+##   73.2967666666667    0   1
+##   73.3403             1   0
+##   73.3828333333333    1   0
+##   73.4574666666667    0   1
+##   73.6294             1   0
+##   74.0595666666666    1   0
+##   74.1802666666667    1   0
+##   74.4077             1   0
+##   74.4351333333333    1   0
+##   74.5592666666666    1   0
+##   74.8154333333333    1   0
+##   74.8921             1   0
+##   74.9333666666667    1   0
+##   75.0284333333334    1   0
+##   75.111              1   0
+##   76.0959333333334    1   0
+##   76.1659333333333    1   0
+##   76.4618333333333    1   0
+##   76.5154             1   0
+##   77.3296666666667    1   0
+##   78.1521666666667    1   0
+##   78.5404             1   0
+##   78.6370333333334    1   0
+##   78.7316             1   0
+##   78.8905             1   0
+##   78.972              1   0
+##   79.1079333333333    1   0
+##   79.3042333333334    1   0
+##   79.3422             1   0
+##   79.3878333333333    1   0
+##   79.5871333333333    1   0
+##   79.7036666666667    1   0
+##   80.1361666666667    1   0</code></pre>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">mean</span>(pred<span class="op">==</span>prb2[<span class="op">-</span>train1, <span class="st">&quot;lowe0&quot;</span>]) <span class="co">#accuracy</span></a></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 </div>

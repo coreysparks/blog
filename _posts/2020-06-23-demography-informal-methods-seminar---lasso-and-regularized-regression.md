@@ -68,44 +68,44 @@ layout: post
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -4.4701  -1.1485   0.1157   0.9652   8.5609  
+## -4.3470  -1.0362   0.1334   0.9305   8.1069  
 ## 
 ## Coefficients:
 ##                                   Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                       67.94737    0.12390 548.395  &lt; 2e-16 ***
-## continentAsia                      0.07629    0.20473   0.373   0.7099    
-## continentEurope                    0.13251    0.29856   0.444   0.6577    
-## continentNorth.America             0.38908    0.19954   1.950   0.0527 .  
-## continentOceania                   0.01186    0.17428   0.068   0.9458    
-## continentSouth.America             0.29571    0.16330   1.811   0.0718 .  
-## population.                       -0.08559    0.13428  -0.637   0.5246    
-## cbr                               -6.22283    3.22808  -1.928   0.0554 .  
-## cdr                               -2.52683    1.32109  -1.913   0.0573 .  
-## rate.of.natural.increase           5.74717    2.89958   1.982   0.0490 *  
-## net.migration.rate                 0.21746    0.20729   1.049   0.2955    
-## imr                               -2.16095    0.45235  -4.777 3.63e-06 ***
-## womandlifetimeriskmaternaldeath   -0.04145    0.21272  -0.195   0.8457    
-## tfr                                1.11599    0.85121   1.311   0.1915    
-## percpoplt15                       -1.19639    0.77100  -1.552   0.1225    
-## percpopgt65                        3.38961    0.44088   7.688 8.84e-13 ***
-## percurban                         -0.10271    0.24175  -0.425   0.6714    
-## percpopinurbangt750k               0.12130    0.23974   0.506   0.6135    
-## percpop1549hivaids2007            -1.59242    0.27645  -5.760 3.49e-08 ***
-## percmarwomcontraall                0.21340    0.35105   0.608   0.5440    
-## percmarwomcontramodern             0.30819    0.31166   0.989   0.3240    
-## percppundernourished0204          -0.51020    0.19238  -2.652   0.0087 ** 
-## motorvehper1000pop0005             0.16869    0.32072   0.526   0.5996    
-## percpopwaccessimprovedwatersource  0.62669    0.24222   2.587   0.0104 *  
-## gnippppercapitausdollars           0.76734    0.36533   2.100   0.0371 *  
-## popdenspersqkm                    -0.25345    0.20012  -1.266   0.2070    
+## (Intercept)                       67.95694    0.12294 552.744  &lt; 2e-16 ***
+## continentAsia                      0.07720    0.20327   0.380   0.7045    
+## continentEurope                    0.22202    0.29448   0.754   0.4519    
+## continentNorth.America             0.39021    0.19561   1.995   0.0475 *  
+## continentOceania                  -0.10322    0.17471  -0.591   0.5554    
+## continentSouth.America             0.24651    0.16210   1.521   0.1301    
+## population.                       -0.07920    0.13370  -0.592   0.5543    
+## cbr                               -6.23299    3.19702  -1.950   0.0527 .  
+## cdr                               -2.37212    1.31148  -1.809   0.0721 .  
+## rate.of.natural.increase           5.53259    2.88553   1.917   0.0568 .  
+## net.migration.rate                -0.11659    0.20356  -0.573   0.5675    
+## imr                               -2.37542    0.42992  -5.525 1.12e-07 ***
+## womandlifetimeriskmaternaldeath    0.06185    0.21018   0.294   0.7689    
+## tfr                                0.77591    0.87183   0.890   0.3746    
+## percpoplt15                       -0.97796    0.78461  -1.246   0.2142    
+## percpopgt65                        3.02097    0.45506   6.639 3.49e-10 ***
+## percurban                         -0.10826    0.23176  -0.467   0.6410    
+## percpopinurbangt750k               0.30498    0.21709   1.405   0.1618    
+## percpop1549hivaids2007            -1.75795    0.27465  -6.401 1.26e-09 ***
+## percmarwomcontraall               -0.11868    0.38931  -0.305   0.7608    
+## percmarwomcontramodern             0.60254    0.33495   1.799   0.0737 .  
+## percppundernourished0204          -0.28350    0.20518  -1.382   0.1687    
+## motorvehper1000pop0005             0.37047    0.31006   1.195   0.2337    
+## percpopwaccessimprovedwatersource  0.33456    0.24727   1.353   0.1777    
+## gnippppercapitausdollars           0.82764    0.35362   2.341   0.0203 *  
+## popdenspersqkm                     0.30807    0.20080   1.534   0.1267    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## (Dispersion parameter for gaussian family taken to be 3.208519)
+## (Dispersion parameter for gaussian family taken to be 3.159121)
 ## 
-##     Null deviance: 25132.42  on 208  degrees of freedom
-## Residual deviance:   587.16  on 183  degrees of freedom
-## AIC: 863.01
+##     Null deviance: 25164.61  on 208  degrees of freedom
+## Residual deviance:   578.12  on 183  degrees of freedom
+## AIC: 859.76
 ## 
 ## Number of Fisher Scoring iterations: 2</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">length</span>(<span class="kw">coef</span>(fm))</a></code></pre></div>
@@ -121,52 +121,49 @@ layout: post
 <pre><code>## 
 ## Call:
 ## glm(formula = y ~ continentNorth.America + continentSouth.America + 
-##     cbr + cdr + rate.of.natural.increase + imr + tfr + percpoplt15 + 
-##     percpopgt65 + percpop1549hivaids2007 + percmarwomcontramodern + 
-##     percppundernourished0204 + percpopwaccessimprovedwatersource + 
-##     gnippppercapitausdollars + popdenspersqkm, data = dat)
+##     cbr + cdr + rate.of.natural.increase + imr + percpopgt65 + 
+##     percpopinurbangt750k + percpop1549hivaids2007 + percmarwomcontramodern + 
+##     percpopwaccessimprovedwatersource + gnippppercapitausdollars, 
+##     data = dat)
 ## 
 ## Deviance Residuals: 
 ##     Min       1Q   Median       3Q      Max  
-## -4.4461  -1.0855   0.1601   0.9417   8.4237  
+## -4.5939  -1.1511   0.1894   0.9632   8.0198  
 ## 
 ## Coefficients:
 ##                                   Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                        67.9474     0.1215 559.424  &lt; 2e-16 ***
-## continentNorth.America              0.3433     0.1369   2.507  0.01299 *  
-## continentSouth.America              0.2608     0.1295   2.015  0.04530 *  
-## cbr                                -6.3122     3.0736  -2.054  0.04135 *  
-## cdr                                -2.5636     1.2627  -2.030  0.04371 *  
-## rate.of.natural.increase            5.6699     2.7806   2.039  0.04281 *  
-## imr                                -2.2159     0.4002  -5.537 9.98e-08 ***
-## tfr                                 1.2193     0.8013   1.522  0.12973    
-## percpoplt15                        -1.3069     0.7142  -1.830  0.06882 .  
-## percpopgt65                         3.3658     0.3467   9.709  &lt; 2e-16 ***
-## percpop1549hivaids2007             -1.5855     0.2495  -6.356 1.46e-09 ***
-## percmarwomcontramodern              0.3818     0.1737   2.198  0.02915 *  
-## percppundernourished0204           -0.4686     0.1796  -2.610  0.00976 ** 
-## percpopwaccessimprovedwatersource   0.6180     0.2302   2.684  0.00790 ** 
-## gnippppercapitausdollars            1.0045     0.2099   4.786 3.37e-06 ***
-## popdenspersqkm                     -0.2168     0.1407  -1.541  0.12494    
+## (Intercept)                        67.9569     0.1213 560.321  &lt; 2e-16 ***
+## continentNorth.America              0.3215     0.1300   2.473   0.0142 *  
+## continentSouth.America              0.2095     0.1317   1.591   0.1132    
+## cbr                                -6.2002     3.0472  -2.035   0.0432 *  
+## cdr                                -2.2039     1.2497  -1.764   0.0794 .  
+## rate.of.natural.increase            5.5896     2.7241   2.052   0.0415 *  
+## imr                                -2.4789     0.3761  -6.590 3.96e-10 ***
+## percpopgt65                         3.6290     0.3294  11.016  &lt; 2e-16 ***
+## percpopinurbangt750k                0.2849     0.1498   1.902   0.0586 .  
+## percpop1549hivaids2007             -1.8568     0.2070  -8.971 2.37e-16 ***
+## percmarwomcontramodern              0.3689     0.1699   2.172   0.0311 *  
+## percpopwaccessimprovedwatersource   0.4307     0.2304   1.870   0.0630 .  
+## gnippppercapitausdollars            1.2547     0.1883   6.665 2.62e-10 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## (Dispersion parameter for gaussian family taken to be 3.083251)
+## (Dispersion parameter for gaussian family taken to be 3.074258)
 ## 
-##     Null deviance: 25132.42  on 208  degrees of freedom
-## Residual deviance:   595.07  on 193  degrees of freedom
-## AIC: 845.8
+##     Null deviance: 25164.61  on 208  degrees of freedom
+## Residual deviance:   602.55  on 196  degrees of freedom
+## AIC: 842.41
 ## 
 ## Number of Fisher Scoring iterations: 2</code></pre>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">length</span>(smod<span class="op">$</span>coefficients)</a></code></pre></div>
-<pre><code>## [1] 16</code></pre>
+<pre><code>## [1] 13</code></pre>
 <p>Sure enough, there are fewer predictors in the model, and those that remain have small p values.</p>
 <p>We can also see the relative model fits of the two models:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">AIC</span>(fm)</a></code></pre></div>
-<pre><code>## [1] 863.0053</code></pre>
+<pre><code>## [1] 859.7625</code></pre>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">AIC</span>(smod)</a></code></pre></div>
-<pre><code>## [1] 845.8015</code></pre>
-<p>This shows that the original model had 26 parameters, while the model that used AIC to find the best subset had 16 parameters, and the relative model fit, in terms of AIC went from 863.0052528 for the saturated model to 845.8014777 for the stepwise model.</p>
+<pre><code>## [1] 842.4147</code></pre>
+<p>This shows that the original model had 26 parameters, while the model that used AIC to find the best subset had 13 parameters, and the relative model fit, in terms of AIC went from 859.762467 for the saturated model to 842.4147049 for the stepwise model.</p>
 <p>An alternative to stepwise selection is called <em>Best Subset Regression</em> and considers all possible combinations of variables from the data, and scores the model based on seeing all possible predictors.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">library</span>(bestglm)</a></code></pre></div>
 <pre><code>## Loading required package: leaps</code></pre>
@@ -181,33 +178,30 @@ layout: post
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -4.4461 -1.0855  0.1601  0.9417  8.4237 
+## -4.5939 -1.1511  0.1894  0.9632  8.0198 
 ## 
 ## Coefficients:
 ##                                   Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)                        67.9474     0.1215 559.424  &lt; 2e-16 ***
-## continentNorth.America              0.3433     0.1369   2.507  0.01299 *  
-## continentSouth.America              0.2608     0.1295   2.015  0.04530 *  
-## cbr                                -6.3122     3.0736  -2.054  0.04135 *  
-## cdr                                -2.5636     1.2627  -2.030  0.04371 *  
-## rate.of.natural.increase            5.6699     2.7806   2.039  0.04281 *  
-## imr                                -2.2159     0.4002  -5.537 9.98e-08 ***
-## tfr                                 1.2193     0.8013   1.522  0.12973    
-## percpoplt15                        -1.3069     0.7142  -1.830  0.06882 .  
-## percpopgt65                         3.3658     0.3467   9.709  &lt; 2e-16 ***
-## percpop1549hivaids2007             -1.5855     0.2495  -6.356 1.46e-09 ***
-## percmarwomcontramodern              0.3818     0.1737   2.198  0.02915 *  
-## percppundernourished0204           -0.4686     0.1796  -2.610  0.00976 ** 
-## percpopwaccessimprovedwatersource   0.6180     0.2302   2.684  0.00790 ** 
-## gnippppercapitausdollars            1.0045     0.2099   4.786 3.37e-06 ***
-## popdenspersqkm                     -0.2168     0.1407  -1.541  0.12494    
+## (Intercept)                        67.9569     0.1213 560.321  &lt; 2e-16 ***
+## continentNorth.America              0.3215     0.1300   2.473   0.0142 *  
+## continentSouth.America              0.2095     0.1317   1.591   0.1132    
+## cbr                                -6.2002     3.0472  -2.035   0.0432 *  
+## cdr                                -2.2039     1.2497  -1.764   0.0794 .  
+## rate.of.natural.increase            5.5896     2.7241   2.052   0.0415 *  
+## imr                                -2.4789     0.3761  -6.590 3.96e-10 ***
+## percpopgt65                         3.6290     0.3294  11.016  &lt; 2e-16 ***
+## percpopinurbangt750k                0.2849     0.1498   1.902   0.0586 .  
+## percpop1549hivaids2007             -1.8568     0.2070  -8.971 2.37e-16 ***
+## percmarwomcontramodern              0.3689     0.1699   2.172   0.0311 *  
+## percpopwaccessimprovedwatersource   0.4307     0.2304   1.870   0.0630 .  
+## gnippppercapitausdollars            1.2547     0.1883   6.665 2.62e-10 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.756 on 193 degrees of freedom
-## Multiple R-squared:  0.9763, Adjusted R-squared:  0.9745 
-## F-statistic: 530.6 on 15 and 193 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>This creates a parsimonious model, with only 16 coefficients and an AIC of 845.8014777 which is slightly lower than the stepwise model.</p>
+## Residual standard error: 1.753 on 196 degrees of freedom
+## Multiple R-squared:  0.9761, Adjusted R-squared:  0.9746 
+## F-statistic: 665.8 on 12 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>This creates a parsimonious model, with only 13 coefficients and an AIC of 842.4147049 which is slightly lower than the stepwise model.</p>
 </div>
 <div id="model-shrinkage" class="section level2">
 <h2>Model shrinkage</h2>
@@ -244,10 +238,10 @@ layout: post
 ## Measure: Mean-Squared Error 
 ## 
 ##     Lambda Measure     SE Nonzero
-## min 0.9827   4.196 0.4597      25
-## 1se 1.8848   4.583 0.4942      25</code></pre>
+## min 0.9822   4.382 0.5652      25
+## 1se 2.2690   4.908 0.4604      25</code></pre>
 <p>The plot shows the mean square error for the model with a particular value of log(<span class="math inline">\(\lambda\)</span>). The dotted lines represent the “best” value and the value of <span class="math inline">\(\lambda\)</span> that is 1 standard error larger than the true minimum.</p>
-<p>Why the two values? Well, the minimum value of <span class="math inline">\(\lambda\)</span>, in this case about -0.0174061, and the minimum + 1se is 0.6338301. The smaller value gives the simplest model, while the 1 se value gives the simplest model that also has high accuracy.</p>
+<p>Why the two values? Well, the minimum value of <span class="math inline">\(\lambda\)</span>, in this case about -0.0179864, and the minimum + 1se is 0.8193173. The smaller value gives the simplest model, while the 1 se value gives the simplest model that also has high accuracy.</p>
 <p>How do the coefficient compare?</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">options</span>(<span class="dt">scipen=</span><span class="dv">999</span>)</a>
 <a class="sourceLine" id="cb32-2" data-line-number="2">ridgemod2&lt;-<span class="kw">glmnet</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>y, <span class="dt">alpha =</span> <span class="dv">0</span>, <span class="dt">lambda =</span> s1<span class="op">$</span>lambda.min)</a>
@@ -256,35 +250,35 @@ layout: post
 ## Call:  glmnet(x = x, y = y, alpha = 0, lambda = s1$lambda.min) 
 ## 
 ##   Df  %Dev Lambda
-## 1 25 97.22 0.9827</code></pre>
+## 1 25 97.32 0.9822</code></pre>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">ridgemod2<span class="op">$</span>beta</a></code></pre></div>
 <pre><code>## 25 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
-##                                             s0
-## continentAsia                      0.163697943
-## continentEurope                    0.260464327
-## continentNorth America             0.416673047
-## continentOceania                   0.048230094
-## continentSouth America             0.320740119
-## population.                       -0.115643605
-## cbr                               -0.678536395
-## cdr                               -3.209425133
-## rate.of.natural.increase           0.836364799
-## net.migration.rate                 0.083459598
-## imr                               -2.175259458
-## womandlifetimeriskmaternaldeath    0.245227785
-## tfr                               -0.235217218
-## percpoplt15                       -0.659656297
-## percpopgt65                        1.725871038
-## percurban                          0.004423673
-## percpopinurbangt750k               0.145297023
-## percpop1549hivaids2007            -2.298313675
-## percmarwomcontraall                0.340661399
-## percmarwomcontramodern             0.437533365
-## percppundernourished0204          -0.542749694
-## motorvehper1000pop0005             0.640472409
-## percpopwaccessimprovedwatersource  0.877995556
-## gnippppercapitausdollars           0.747394120
-## popdenspersqkm                    -0.026130509</code></pre>
+##                                            s0
+## continentAsia                      0.16976947
+## continentEurope                    0.34553181
+## continentNorth America             0.46350047
+## continentOceania                  -0.02282180
+## continentSouth America             0.27165406
+## population.                       -0.10805054
+## cbr                               -0.77128773
+## cdr                               -3.19773064
+## rate.of.natural.increase           0.74050874
+## net.migration.rate                -0.19158308
+## imr                               -2.21869216
+## womandlifetimeriskmaternaldeath    0.27651883
+## tfr                               -0.35993995
+## percpoplt15                       -0.65751353
+## percpopgt65                        1.59794019
+## percurban                         -0.02204929
+## percpopinurbangt750k               0.36644454
+## percpop1549hivaids2007            -2.34569547
+## percmarwomcontraall                0.15264335
+## percmarwomcontramodern             0.57816390
+## percppundernourished0204          -0.34197021
+## motorvehper1000pop0005             0.66058433
+## percpopwaccessimprovedwatersource  0.58660140
+## gnippppercapitausdollars           0.91519991
+## popdenspersqkm                     0.46516889</code></pre>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">df1&lt;-<span class="kw">data.frame</span>(<span class="dt">names =</span> <span class="kw">names</span>(<span class="kw">coef</span>(fm)) , <span class="dt">beta=</span><span class="kw">round</span>(<span class="kw">coef</span>(fm),<span class="dv">4</span>), <span class="dt">mod=</span><span class="st">&quot;gm&quot;</span>)</a>
 <a class="sourceLine" id="cb36-2" data-line-number="2">df2&lt;-<span class="kw">data.frame</span>(<span class="dt">names =</span> <span class="kw">c</span>(<span class="kw">names</span>(<span class="kw">coef</span>(fm)[<span class="dv">1</span>]), <span class="kw">row.names</span>(ridgemod2<span class="op">$</span>beta)), <span class="dt">beta=</span><span class="kw">round</span>(<span class="kw">as.numeric</span>(<span class="kw">coef</span>(s1, <span class="dt">s =</span> s1<span class="op">$</span>lambda.min)),<span class="dv">4</span>), <span class="dt">mod=</span><span class="st">&quot;ridge&quot;</span>)</a>
 <a class="sourceLine" id="cb36-3" data-line-number="3"></a>
@@ -316,42 +310,42 @@ layout: post
 ## Measure: Mean-Squared Error 
 ## 
 ##     Lambda Measure     SE Nonzero
-## min 0.1240   3.724 0.5529      13
-## 1se 0.4561   4.226 0.5388      10</code></pre>
+## min 0.0646   3.731 0.6382      15
+## 1se 0.4559   4.352 0.7667      10</code></pre>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">test&lt;-<span class="kw">glmnet</span>(<span class="dt">x =</span>x, <span class="dt">y=</span>y, <span class="dt">family=</span><span class="st">&quot;gaussian&quot;</span>, <span class="dt">alpha =</span> <span class="dv">1</span>, <span class="dt">lambda =</span> s2<span class="op">$</span>lambda<span class="fl">.1</span>se)</a>
 <a class="sourceLine" id="cb42-2" data-line-number="2">test</a></code></pre></div>
 <pre><code>## 
 ## Call:  glmnet(x = x, y = y, family = &quot;gaussian&quot;, alpha = 1, lambda = s2$lambda.1se) 
 ## 
 ##   Df  %Dev Lambda
-## 1 10 96.98 0.4561</code></pre>
+## 1 10 96.97 0.4559</code></pre>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">print</span>(test<span class="op">$</span>beta)</a></code></pre></div>
 <pre><code>## 25 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
-##                                           s0
-## continentAsia                      .        
-## continentEurope                    .        
-## continentNorth America             .        
-## continentOceania                   .        
-## continentSouth America             .        
-## population.                        .        
-## cbr                                .        
-## cdr                               -4.0131811
-## rate.of.natural.increase           .        
-## net.migration.rate                 .        
-## imr                               -3.1103156
-## womandlifetimeriskmaternaldeath    .        
-## tfr                                .        
-## percpoplt15                       -0.1770398
-## percpopgt65                        2.5781928
-## percurban                          .        
-## percpopinurbangt750k               .        
-## percpop1549hivaids2007            -1.8747926
-## percmarwomcontraall                .        
-## percmarwomcontramodern             0.2087732
-## percppundernourished0204          -0.2418169
-## motorvehper1000pop0005             0.2207231
-## percpopwaccessimprovedwatersource  0.4974571
-## gnippppercapitausdollars           0.8739080
+##                                            s0
+## continentAsia                      .         
+## continentEurope                    .         
+## continentNorth America             .         
+## continentOceania                   .         
+## continentSouth America             .         
+## population.                        .         
+## cbr                                .         
+## cdr                               -4.11173283
+## rate.of.natural.increase           .         
+## net.migration.rate                 .         
+## imr                               -3.13251642
+## womandlifetimeriskmaternaldeath    .         
+## tfr                                .         
+## percpoplt15                       -0.25132019
+## percpopgt65                        2.81422569
+## percurban                          .         
+## percpopinurbangt750k               0.10711580
+## percpop1549hivaids2007            -1.78945838
+## percmarwomcontraall                .         
+## percmarwomcontramodern             0.20523750
+## percppundernourished0204           .         
+## motorvehper1000pop0005             0.03841647
+## percpopwaccessimprovedwatersource  0.33401182
+## gnippppercapitausdollars           1.06967019
 ## popdenspersqkm                     .</code></pre>
 </div>
 <div id="elastic-net" class="section level2">
@@ -371,36 +365,36 @@ layout: post
 ## Measure: Mean-Squared Error 
 ## 
 ##     Lambda Measure     SE Nonzero
-## min 0.1558   3.779 0.5173      16
-## 1se 0.6901   4.251 0.5506      12</code></pre>
+## min 0.1292   3.593 0.5248      16
+## 1se 0.6284   4.037 0.5181      12</code></pre>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">test3&lt;-<span class="kw">glmnet</span>(<span class="dt">x =</span>x, <span class="dt">y=</span>y, <span class="dt">family=</span><span class="st">&quot;gaussian&quot;</span>, <span class="dt">alpha =</span> <span class="fl">.5</span>, <span class="dt">lambda =</span> s3<span class="op">$</span>lambda<span class="fl">.1</span>se)</a>
 <a class="sourceLine" id="cb50-2" data-line-number="2">test3<span class="op">$</span>beta</a></code></pre></div>
 <pre><code>## 25 x 1 sparse Matrix of class &quot;dgCMatrix&quot;
-##                                           s0
-## continentAsia                      .        
-## continentEurope                    .        
-## continentNorth America             .        
-## continentOceania                   .        
-## continentSouth America             .        
-## population.                        .        
-## cbr                               -0.1012977
-## cdr                               -3.7160293
-## rate.of.natural.increase           .        
-## net.migration.rate                 .        
-## imr                               -2.7882089
-## womandlifetimeriskmaternaldeath    .        
-## tfr                                .        
-## percpoplt15                       -0.4329258
-## percpopgt65                        2.0691386
-## percurban                          .        
-## percpopinurbangt750k               .        
-## percpop1549hivaids2007            -2.0951401
-## percmarwomcontraall                0.1214676
-## percmarwomcontramodern             0.2900019
-## percppundernourished0204          -0.3377148
-## motorvehper1000pop0005             0.4200512
-## percpopwaccessimprovedwatersource  0.7084976
-## gnippppercapitausdollars           0.8585186
+##                                            s0
+## continentAsia                      .         
+## continentEurope                    .         
+## continentNorth America             0.05233114
+## continentOceania                   .         
+## continentSouth America             .         
+## population.                        .         
+## cbr                               -0.22571539
+## cdr                               -3.79036104
+## rate.of.natural.increase           .         
+## net.migration.rate                 .         
+## imr                               -2.84336643
+## womandlifetimeriskmaternaldeath    .         
+## tfr                                .         
+## percpoplt15                       -0.46055079
+## percpopgt65                        2.31578751
+## percurban                          .         
+## percpopinurbangt750k               0.23562128
+## percpop1549hivaids2007            -2.06460379
+## percmarwomcontraall                .         
+## percmarwomcontramodern             0.35690946
+## percppundernourished0204           .         
+## motorvehper1000pop0005             0.28068647
+## percpopwaccessimprovedwatersource  0.52328787
+## gnippppercapitausdollars           0.99759091
 ## popdenspersqkm                     .</code></pre>
 <p>In these examples, we will use the Demographic and Health Survey <a href="https://dhsprogram.com/data/Model-Datasets.cfm">Model Data</a>. These are based on the DHS survey, but are publicly available and are used to practice using the DHS data sets, but don’t represent a real country.</p>
 <p>In this example, we will use the outcome of contraceptive choice (modern vs other/none) as our outcome. An excellent guide for this type of literature is this <a href="https://journals.sagepub.com/doi/pdf/10.1177/0021909614547462">article</a></p>

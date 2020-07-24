@@ -1,7 +1,7 @@
 ---
 title: "Survey Statistics using BRFSS data"
 author: "Corey Sparks, PhD"
-date: Febreuary 3, 2020
+date: February 3, 2020
 output:
   html_document:
     keep_md: true

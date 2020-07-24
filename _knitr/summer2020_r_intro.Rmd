@@ -267,7 +267,7 @@ mydat<-data.frame(
 dim(mydat)
 length(mydat$x)
 #Open the dataframe in a viewer and just print it
-View(mydat)
+knitr::kable(mydat)
 print(mydat)
 ```
 
@@ -678,12 +678,12 @@ library(sf)
 ```
 
 ```{r}
-?load_variables
+
 v15_Profile <- load_variables(year = 2018 , dataset = "acs5/profile",
                               cache = TRUE) #demographic profile tables
 
 #Open the data for examination
-View(v15_Profile)
+head(v15_Profile)
 
 #Search for variables by keywords in the label
 v15_Profile[grep(x = v15_Profile$label, "Median household"), c("name", "label")]

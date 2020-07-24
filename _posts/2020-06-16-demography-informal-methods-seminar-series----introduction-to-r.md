@@ -200,8 +200,44 @@ layout: post
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="kw">length</span>(mydat<span class="op">$</span>x)</a></code></pre></div>
 <pre><code>## [1] 5</code></pre>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="co">#Open the dataframe in a viewer and just print it</span></a>
-<a class="sourceLine" id="cb63-2" data-line-number="2"><span class="kw">View</span>(mydat)</a>
-<a class="sourceLine" id="cb63-3" data-line-number="3"><span class="kw">print</span>(mydat)</a></code></pre></div>
+<a class="sourceLine" id="cb63-2" data-line-number="2">knitr<span class="op">::</span><span class="kw">kable</span>(mydat)</a></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">x</th>
+<th align="right">y</th>
+<th align="left">group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">10</td>
+<td align="left">A</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">20</td>
+<td align="left">A</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">35</td>
+<td align="left">A</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">57</td>
+<td align="left">B</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">37</td>
+<td align="left">B</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="kw">print</span>(mydat)</a></code></pre></div>
 <pre><code>##   x  y group
 ## 1 1 10     A
 ## 2 2 20     A
@@ -215,7 +251,7 @@ layout: post
 <p>I’ve had this entered into a <strong>Comma Separated Values</strong> file by some poor previous GRA of mine and it lives happily on Github now for all the world to see. CSV files are a good way to store data coming out of a spreadsheet. R can read Excel files, but it digests text files easier. Save something from Excel as CSV.</p>
 <p>I can read it from github directly by using a function in the <code>readr</code> library:</p>
 <p>That’s handy. If the file lived on our computer, I could read it in like so: <em>note, please make a folder on your computer so you can store things for this class in a single location!!!! Organization is Key to Success in Graduate School</em></p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1">prb&lt;-<span class="kw">read_csv</span>(<span class="st">&quot;~/git_area//r_courses/PRB2008_All.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1">prb&lt;-<span class="kw">read_csv</span>(<span class="st">&quot;~/git_area//r_courses/PRB2008_All.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_double(),
@@ -227,10 +263,10 @@ layout: post
 <p>Same result.</p>
 <p>The <code>haven</code> library can read files from other statistical packages easily, so if you have data in Stata, SAS or SPSS, you can read it into R using those functions, for example, the <code>read_dta()</code> function reads stata files, <code>read_sav()</code> to read spss data files.</p>
 <p>I would not recommend you store data in Excel files for many reasons, but if you do, save the files as a CSV file and use the <code>read_csv()</code> function above to read it in.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw">library</span>(haven)</a>
-<a class="sourceLine" id="cb68-2" data-line-number="2">prb_stata&lt;-<span class="kw">read_dta</span>(<span class="st">&quot;~/git_area//r_courses/prb2008.dta&quot;</span>)</a>
-<a class="sourceLine" id="cb68-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb68-4" data-line-number="4">prb_spss&lt;-<span class="kw">read_sav</span>(<span class="st">&quot;~/git_area//r_courses/prb_2008.sav&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="kw">library</span>(haven)</a>
+<a class="sourceLine" id="cb69-2" data-line-number="2">prb_stata&lt;-<span class="kw">read_dta</span>(<span class="st">&quot;~/git_area//r_courses/prb2008.dta&quot;</span>)</a>
+<a class="sourceLine" id="cb69-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb69-4" data-line-number="4">prb_spss&lt;-<span class="kw">read_sav</span>(<span class="st">&quot;~/git_area//r_courses/prb_2008.sav&quot;</span>)</a></code></pre></div>
 <p>Don’t know what a function’s called use ??</p>
 <p><code>??stata</code> <code>??csv</code></p>
 <p>and Rstudio will show you a list of functions that have these strings in them.</p>
@@ -240,22 +276,22 @@ layout: post
 <div id="save-a-file" class="section level3">
 <h3>Save a file</h3>
 <p>Want to save something as a R data file? Use <code>save()</code></p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="kw">save</span>(prb, <span class="dt">file=</span><span class="st">&quot;~/prb_2008_saved.Rdata&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">save</span>(prb, <span class="dt">file=</span><span class="st">&quot;~/prb_2008_saved.Rdata&quot;</span>)</a></code></pre></div>
 <p>If you have an R data file, use <code>load()</code> to open it:</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw">load</span>(<span class="st">&quot;~/git_area//r_courses/prb_2008.Rdata&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">load</span>(<span class="st">&quot;~/git_area//r_courses/prb_2008.Rdata&quot;</span>)</a></code></pre></div>
 </div>
 <div id="descriptive-analysis" class="section level3">
 <h3>Descriptive analysis</h3>
 <p>Let’s have a look at some descriptive information about the data:</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="co">#Frequency Table of # of Contries by Continent</span></a>
-<a class="sourceLine" id="cb71-2" data-line-number="2"><span class="kw">table</span>(prb<span class="op">$</span>Continent)</a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="co">#Frequency Table of # of Contries by Continent</span></a>
+<a class="sourceLine" id="cb72-2" data-line-number="2"><span class="kw">table</span>(prb<span class="op">$</span>Continent)</a></code></pre></div>
 <pre><code>## 
 ##        Africa          Asia        Europe North America       Oceania 
 ##            56            51            45            27            17 
 ## South America 
 ##            13</code></pre>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="co">#basic summary statistics for the fertility rate</span></a>
-<a class="sourceLine" id="cb73-2" data-line-number="2"><span class="kw">summary</span>(prb<span class="op">$</span>TFR)</a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="co">#basic summary statistics for the fertility rate</span></a>
+<a class="sourceLine" id="cb74-2" data-line-number="2"><span class="kw">summary</span>(prb<span class="op">$</span>TFR)</a></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
 ##   1.000   1.775   2.500   3.032   4.000   7.100       1</code></pre>
 <p>From this summary, we see that the mean is 3.023, there is one country missing the Total fertility rate variable. The minimum is 1 and the maximum is 7.1 children per woman.</p>
@@ -269,13 +305,13 @@ layout: post
 <p>I’ve done an extract (do example in class) and stored the data in a R data (.Rdata) format on <a href="https://github.com/coreysparks/r_courses">my github data site</a>. The file we are using is called <a href="https://github.com/coreysparks/r_courses/blob/master/census_data.Rdata?raw=true">census.Rdata</a>. This extract is small by demographic data standards and is only about 300,000 people.</p>
 <p>There is also a codebook that describes the data and all the response levels for each variable in the data. They are also on my github data page, and called <a href="https://github.com/coreysparks/r_courses/blob/master/Codebook_census_data.pdf">Codebook_census_data</a>.</p>
 <p>I can read it from my github repository directly by using the <code>load()</code> function combined with the <code>url()</code> function, to tell R that the file is on the web. If the file were, say, in my documents folder, I could likewise load the data from disk.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">load</span>(<span class="dt">file=</span><span class="kw">url</span>(<span class="st">&quot;https://github.com/coreysparks/r_courses/blob/master/census_data.Rdata?raw=true&quot;</span>))</a>
-<a class="sourceLine" id="cb75-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb75-3" data-line-number="3"><span class="co">#from disk</span></a>
-<a class="sourceLine" id="cb75-4" data-line-number="4"><span class="co">#load(&quot;C:/Users/ozd504/Documents/census_data.Rdata&quot;)</span></a>
-<a class="sourceLine" id="cb75-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb75-6" data-line-number="6"><span class="co">#print the column names</span></a>
-<a class="sourceLine" id="cb75-7" data-line-number="7"><span class="kw">names</span>(census) </a></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" data-line-number="1"><span class="kw">load</span>(<span class="dt">file=</span><span class="kw">url</span>(<span class="st">&quot;https://github.com/coreysparks/r_courses/blob/master/census_data.Rdata?raw=true&quot;</span>))</a>
+<a class="sourceLine" id="cb76-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb76-3" data-line-number="3"><span class="co">#from disk</span></a>
+<a class="sourceLine" id="cb76-4" data-line-number="4"><span class="co">#load(&quot;C:/Users/ozd504/Documents/census_data.Rdata&quot;)</span></a>
+<a class="sourceLine" id="cb76-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb76-6" data-line-number="6"><span class="co">#print the column names</span></a>
+<a class="sourceLine" id="cb76-7" data-line-number="7"><span class="kw">names</span>(census) </a></code></pre></div>
 <pre><code>##  [1] &quot;year&quot;      &quot;datanum&quot;   &quot;serial&quot;    &quot;hhwt&quot;      &quot;statefip&quot;  &quot;met2013&quot;  
 ##  [7] &quot;puma&quot;      &quot;gq&quot;        &quot;pernum&quot;    &quot;perwt&quot;     &quot;famsize&quot;   &quot;nchild&quot;   
 ## [13] &quot;nchlt5&quot;    &quot;eldch&quot;     &quot;nsibs&quot;     &quot;relate&quot;    &quot;related&quot;   &quot;sex&quot;      
@@ -301,7 +337,7 @@ layout: post
 <div id="pipes" class="section level3">
 <h3>Pipes</h3>
 <p>The second thing we need to know about are <em>pipes</em>. Pipes can be used to chain together verbs so that the code executes on the same dataset in sequence. They are identified by a <code>%&gt;%</code> at the end of each verb statement. Here’s our example in action:</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;dplyr&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:stats&#39;:
@@ -310,12 +346,12 @@ layout: post
 <pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">census<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb81-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(age<span class="op">&gt;</span><span class="dv">18</span>, statefip<span class="op">==</span><span class="dv">48</span>, labforce<span class="op">==</span><span class="dv">2</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb81-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">newwage=</span> <span class="kw">ifelse</span>(incwage<span class="op">%in%</span><span class="kw">c</span>(<span class="dv">999998</span>,<span class="dv">999999</span>), <span class="ot">NA</span>, incwage),</a>
-<a class="sourceLine" id="cb81-4" data-line-number="4">         <span class="dt">newsex=</span><span class="kw">ifelse</span>(sex<span class="op">==</span><span class="dv">1</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span> ))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb81-5" data-line-number="5"><span class="st">  </span><span class="kw">group_by</span>(newsex)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb81-6" data-line-number="6"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">med_income=</span> <span class="kw">median</span>(newwage, <span class="dt">na.rm=</span>T))</a></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" data-line-number="1">census<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb82-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(age<span class="op">&gt;</span><span class="dv">18</span>, statefip<span class="op">==</span><span class="dv">48</span>, labforce<span class="op">==</span><span class="dv">2</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb82-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">newwage=</span> <span class="kw">ifelse</span>(incwage<span class="op">%in%</span><span class="kw">c</span>(<span class="dv">999998</span>,<span class="dv">999999</span>), <span class="ot">NA</span>, incwage),</a>
+<a class="sourceLine" id="cb82-4" data-line-number="4">         <span class="dt">newsex=</span><span class="kw">ifelse</span>(sex<span class="op">==</span><span class="dv">1</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span> ))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb82-5" data-line-number="5"><span class="st">  </span><span class="kw">group_by</span>(newsex)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb82-6" data-line-number="6"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">med_income=</span> <span class="kw">median</span>(newwage, <span class="dt">na.rm=</span>T))</a></code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 2 x 2
 ##   newsex med_income
@@ -324,14 +360,14 @@ layout: post
 ## 2 male        38000</code></pre>
 <p>and we see a difference of about <code>$12,000</code> between men and women in Texas.</p>
 <p>Notice in the code above, I did two three different filters in a single <code>filter()</code> statement and two recodes in a single <code>mutate()</code> statement, this is totally legal, and in general you can do several operations within a single verb statement. Otherwise I would have to do:</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">census<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb84-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(age<span class="op">&gt;</span><span class="dv">18</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb84-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(statefip<span class="op">==</span><span class="dv">48</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb84-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(labforce<span class="op">==</span><span class="dv">2</span>)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb84-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">newwage=</span> <span class="kw">ifelse</span>(incwage<span class="op">%in%</span><span class="kw">c</span>(<span class="dv">999998</span>,<span class="dv">999999</span>), <span class="ot">NA</span>, incwage))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb84-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">newsex=</span><span class="kw">ifelse</span>(sex<span class="op">==</span><span class="dv">1</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span> ))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb84-7" data-line-number="7"><span class="st">  </span><span class="kw">group_by</span>(newsex)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb84-8" data-line-number="8"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">med_income=</span> <span class="kw">median</span>(newwage, <span class="dt">na.rm=</span>T))</a></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">census<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(age<span class="op">&gt;</span><span class="dv">18</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(statefip<span class="op">==</span><span class="dv">48</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(labforce<span class="op">==</span><span class="dv">2</span>)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">newwage=</span> <span class="kw">ifelse</span>(incwage<span class="op">%in%</span><span class="kw">c</span>(<span class="dv">999998</span>,<span class="dv">999999</span>), <span class="ot">NA</span>, incwage))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">newsex=</span><span class="kw">ifelse</span>(sex<span class="op">==</span><span class="dv">1</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span> ))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-7" data-line-number="7"><span class="st">  </span><span class="kw">group_by</span>(newsex)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb85-8" data-line-number="8"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">med_income=</span> <span class="kw">median</span>(newwage, <span class="dt">na.rm=</span>T))</a></code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 2 x 2
 ##   newsex med_income
@@ -341,13 +377,13 @@ layout: post
 <p>So we get to the same place. It’s up to you which way you do it, always go with the route that you understand better and that is more readable and explicable to someone else.</p>
 <p>I always say that in R, there’s <strong>always</strong> more than one way to do anything!</p>
 <p>We could also see how incomes are different in San Antonio (variable met2013==41700) compared to Dallas (variable met2013==19100).</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1">census<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb87-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(labforce<span class="op">==</span><span class="dv">2</span>, met2013<span class="op">%in%</span><span class="kw">c</span>(<span class="dv">41700</span>, <span class="dv">19100</span>), age<span class="op">&gt;</span><span class="dv">18</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb87-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">newwage=</span> <span class="kw">ifelse</span>(incwage<span class="op">%in%</span><span class="kw">c</span>(<span class="dv">999998</span>,<span class="dv">999999</span>), <span class="ot">NA</span>, incwage),</a>
-<a class="sourceLine" id="cb87-4" data-line-number="4">         <span class="dt">sexrecode=</span><span class="kw">ifelse</span>(sex<span class="op">==</span><span class="dv">1</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>),</a>
-<a class="sourceLine" id="cb87-5" data-line-number="5">         <span class="dt">city=</span><span class="kw">ifelse</span>(met2013<span class="op">==</span><span class="dv">41700</span>, <span class="st">&quot;San Antonio&quot;</span>, <span class="st">&quot;Dallas&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb87-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(sexrecode, city)<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb87-7" data-line-number="7"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">med_income=</span><span class="kw">median</span>(newwage, <span class="dt">na.rm=</span>T), <span class="dt">n=</span><span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1">census<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb88-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(labforce<span class="op">==</span><span class="dv">2</span>, met2013<span class="op">%in%</span><span class="kw">c</span>(<span class="dv">41700</span>, <span class="dv">19100</span>), age<span class="op">&gt;</span><span class="dv">18</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb88-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">newwage=</span> <span class="kw">ifelse</span>(incwage<span class="op">%in%</span><span class="kw">c</span>(<span class="dv">999998</span>,<span class="dv">999999</span>), <span class="ot">NA</span>, incwage),</a>
+<a class="sourceLine" id="cb88-4" data-line-number="4">         <span class="dt">sexrecode=</span><span class="kw">ifelse</span>(sex<span class="op">==</span><span class="dv">1</span>, <span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>),</a>
+<a class="sourceLine" id="cb88-5" data-line-number="5">         <span class="dt">city=</span><span class="kw">ifelse</span>(met2013<span class="op">==</span><span class="dv">41700</span>, <span class="st">&quot;San Antonio&quot;</span>, <span class="st">&quot;Dallas&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb88-6" data-line-number="6"><span class="st">  </span><span class="kw">group_by</span>(sexrecode, city)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb88-7" data-line-number="7"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">med_income=</span><span class="kw">median</span>(newwage, <span class="dt">na.rm=</span>T), <span class="dt">n=</span><span class="kw">n</span>())</a></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;sexrecode&#39; (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 4 x 4
 ## # Groups:   sexrecode [2]
@@ -369,29 +405,29 @@ layout: post
 <li>Plot annotations - Titles, labels etc.</li>
 </ol>
 <p>Now I will illustrate some basic ggplot examples, and I’m going to use the PRB data for now because it’s much prettier than the ACS data for plotting.</p>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb90-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb90-3" data-line-number="3"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb, <span class="dt">mapping=</span><span class="kw">aes</span>(TFR))<span class="op">+</span></a>
-<a class="sourceLine" id="cb90-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_histogram</span>( <span class="dt">bins=</span><span class="dv">10</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb90-5" data-line-number="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate &quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb90-6" data-line-number="6"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb90-7" data-line-number="7"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;Frequency&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb91-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb91-3" data-line-number="3"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb, <span class="dt">mapping=</span><span class="kw">aes</span>(TFR))<span class="op">+</span></a>
+<a class="sourceLine" id="cb91-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_histogram</span>( <span class="dt">bins=</span><span class="dv">10</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb91-5" data-line-number="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate &quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb91-6" data-line-number="6"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb91-7" data-line-number="7"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;Frequency&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_bin).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/prbhist-1.png" /><!-- --></p>
 <p>There is also a nice geometry called <code>freqpoly</code> that will draw polygons instead of bars for a histogram. I will use this to produce histograms for each continent.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping =</span> <span class="kw">aes</span>(TFR, <span class="dt">colour=</span>Continent))<span class="op">+</span></a>
-<a class="sourceLine" id="cb92-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_freqpoly</span>( <span class="dt">bins=</span><span class="dv">10</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb92-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate by Continent&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb92-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb92-5" data-line-number="5"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;Frequency&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping =</span> <span class="kw">aes</span>(TFR, <span class="dt">colour=</span>Continent))<span class="op">+</span></a>
+<a class="sourceLine" id="cb93-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_freqpoly</span>( <span class="dt">bins=</span><span class="dv">10</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb93-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate by Continent&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb93-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb93-5" data-line-number="5"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;Frequency&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_bin).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-24-1.png" /><!-- --></p>
 <p>Also, we can plot the relative frequency , or density, instead of the count by including the <code>..density..</code> argument in the aesthetic <code>aes()</code>.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping =</span> <span class="kw">aes</span>(TFR, <span class="dt">colour=</span>Continent, ..density..))<span class="op">+</span></a>
-<a class="sourceLine" id="cb94-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_freqpoly</span>( <span class="dt">bins=</span><span class="dv">10</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb94-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate by Continent&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb94-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb94-5" data-line-number="5"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;Frequency&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping =</span> <span class="kw">aes</span>(TFR, <span class="dt">colour=</span>Continent, ..density..))<span class="op">+</span></a>
+<a class="sourceLine" id="cb95-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_freqpoly</span>( <span class="dt">bins=</span><span class="dv">10</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb95-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate by Continent&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb95-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb95-5" data-line-number="5"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;Frequency&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_bin).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-25-1.png" /><!-- --></p>
 </div>
@@ -399,106 +435,106 @@ layout: post
 <div id="stem-and-leaf-plotsbox-and-whisker-plots" class="section level1">
 <h1>Stem and leaf plots/Box and Whisker plots</h1>
 <p>Another visualization method is the stem and leaf plot, or box and whisker plot. This is useful when you have a continuous variable you want to display the distribution of across levels of a categorical variable. This is basically a graphical display of Tukey’s 5 number summary of data.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="kw">ggplot</span>(prb, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span> Continent, <span class="dt">y =</span>TFR))<span class="op">+</span></a>
-<a class="sourceLine" id="cb96-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb96-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate by Continent&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="kw">ggplot</span>(prb, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span> Continent, <span class="dt">y =</span>TFR))<span class="op">+</span></a>
+<a class="sourceLine" id="cb97-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb97-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate by Continent&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-26-1.png" /><!-- --> You can flip the axes, by adding <code>coord_flip()</code></p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1"><span class="kw">ggplot</span>(prb, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span> Continent, <span class="dt">y =</span>TFR))<span class="op">+</span></a>
-<a class="sourceLine" id="cb98-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb98-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate by Continent&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" data-line-number="1"><span class="kw">ggplot</span>(prb, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x=</span> Continent, <span class="dt">y =</span>TFR))<span class="op">+</span></a>
+<a class="sourceLine" id="cb99-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb99-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate by Continent&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span><span class="kw">coord_flip</span>()</a></code></pre></div>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-27-1.png" /><!-- --> You can also color the boxes by a variable, Here, I will make a new variable that is the combination of the continent variable with the region variable, using the <code>paste()</code> function. It’s useful for combining values of two strings.</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1">prb<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb100-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">newname =</span> <span class="kw">paste</span>(Continent, Region, <span class="dt">sep=</span><span class="st">&quot;-&quot;</span>))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb100-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span> newname, <span class="dt">y =</span>TFR,<span class="dt">fill=</span>Continent))<span class="op">+</span></a>
-<a class="sourceLine" id="cb100-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_boxplot</span>()<span class="op">+</span><span class="kw">coord_flip</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb100-5" data-line-number="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate by Continent&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" data-line-number="1">prb<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb101-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">newname =</span> <span class="kw">paste</span>(Continent, Region, <span class="dt">sep=</span><span class="st">&quot;-&quot;</span>))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb101-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span> newname, <span class="dt">y =</span>TFR,<span class="dt">fill=</span>Continent))<span class="op">+</span></a>
+<a class="sourceLine" id="cb101-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_boxplot</span>()<span class="op">+</span><span class="kw">coord_flip</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb101-5" data-line-number="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of the Total Fertility Rate by Continent&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-28-1.png" /><!-- --></p>
 <div id="x-y-scatter-plots" class="section level3">
 <h3>X-Y Scatter plots</h3>
 <p>These are useful for finding relationships among two or more continuous variables. <code>ggplot()</code> can really make these pretty.</p>
 <p>Here are a few riffs using the PRB data:</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR))<span class="op">+</span></a>
-<a class="sourceLine" id="cb102-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb102-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb102-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb102-5" data-line-number="5"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR))<span class="op">+</span></a>
+<a class="sourceLine" id="cb103-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb103-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb103-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb103-5" data-line-number="5"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-29-1.png" /><!-- --></p>
 <p>Now we color varies by continent</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR, <span class="dt">color=</span>Continent))<span class="op">+</span></a>
-<a class="sourceLine" id="cb104-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb104-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb104-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb104-5" data-line-number="5"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR, <span class="dt">color=</span>Continent))<span class="op">+</span></a>
+<a class="sourceLine" id="cb105-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb105-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb105-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb105-5" data-line-number="5"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-30-1.png" /><!-- --></p>
 <p>Now we vary the shape of the point by continent</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1"><span class="co">#shape varies by continent</span></a>
-<a class="sourceLine" id="cb106-2" data-line-number="2"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR, <span class="dt">shape=</span>Continent))<span class="op">+</span></a>
-<a class="sourceLine" id="cb106-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb106-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb106-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb106-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1"><span class="co">#shape varies by continent</span></a>
+<a class="sourceLine" id="cb107-2" data-line-number="2"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR, <span class="dt">shape=</span>Continent))<span class="op">+</span></a>
+<a class="sourceLine" id="cb107-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb107-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb107-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb107-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-31-1.png" /><!-- --></p>
 </div>
 <div id="facet-plots" class="section level2">
 <h2>Facet plots</h2>
 <p>Facet plots are nice, if you want to create a plot separately for a series of groups. This allows you to visualize if the relationship is constant across those groups, well at least graphically.</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR, <span class="dt">color=</span>Continent))<span class="op">+</span></a>
-<a class="sourceLine" id="cb108-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb108-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Continent)<span class="op">+</span></a>
-<a class="sourceLine" id="cb108-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb108-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb108-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR, <span class="dt">color=</span>Continent))<span class="op">+</span></a>
+<a class="sourceLine" id="cb109-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb109-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>Continent)<span class="op">+</span></a>
+<a class="sourceLine" id="cb109-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb109-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb109-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-32-1.png" /><!-- --></p>
 </div>
 <div id="plotting-relationships-with-some-line-fits" class="section level2">
 <h2>Plotting relationships with some line fits</h2>
 <p><code>ggplot</code> allows you to make some very nice line-fit plots for scatter plots. While the math behind these lines is not what we are talking about, they do produce a nice graphical summary of the relationships.</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR))<span class="op">+</span></a>
-<a class="sourceLine" id="cb110-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb110-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>( <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb110-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates-linear fit&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb110-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb110-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR))<span class="op">+</span></a>
+<a class="sourceLine" id="cb111-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb111-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>( <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb111-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates-linear fit&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb111-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb111-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <pre><code>## Warning: Removed 2 rows containing non-finite values (stat_smooth).</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-33-1.png" /><!-- --></p>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb)<span class="op">+</span></a>
-<a class="sourceLine" id="cb114-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR))<span class="op">+</span></a>
-<a class="sourceLine" id="cb114-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR) , <span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb114-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb114-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb114-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb)<span class="op">+</span></a>
+<a class="sourceLine" id="cb115-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR))<span class="op">+</span></a>
+<a class="sourceLine" id="cb115-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>IMR) , <span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb115-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Infant Mortality&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb115-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;TFR&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb115-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <pre><code>## Warning: Removed 2 rows containing non-finite values (stat_smooth).
 
 ## Warning: Removed 2 rows containing missing values (geom_point).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-33-2.png" /><!-- --></p>
 <p>Another example, this time of a bad linear plot!</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>PercPopLT15))<span class="op">+</span></a>
-<a class="sourceLine" id="cb117-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb117-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>( <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb117-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Percent under age 15&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates-linear fit&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb117-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;Percent under age 15&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb117-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb,<span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>PercPopLT15))<span class="op">+</span></a>
+<a class="sourceLine" id="cb118-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb118-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>( <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb118-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Percent under age 15&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates-linear fit&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb118-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;Percent under age 15&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb118-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_smooth).</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-34-1.png" /><!-- --></p>
 <p>So instead, us a nonlinear fit, a la a loess regression:</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb, <span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>PercPopLT15))<span class="op">+</span></a>
-<a class="sourceLine" id="cb121-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
-<a class="sourceLine" id="cb121-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>( <span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb121-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Percent under age 15&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates- loess fit&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb121-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;Percent under age 15&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb121-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data=</span>prb, <span class="dt">mapping=</span> <span class="kw">aes</span>(<span class="dt">x=</span>TFR, <span class="dt">y=</span>PercPopLT15))<span class="op">+</span></a>
+<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()<span class="op">+</span></a>
+<a class="sourceLine" id="cb122-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>( <span class="dt">method =</span> <span class="st">&quot;loess&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb122-4" data-line-number="4"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Relationship between Total Fertility and Percent under age 15&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;2008 Estimates- loess fit&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb122-5" data-line-number="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot;Percent under age 15&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb122-6" data-line-number="6"><span class="st">  </span><span class="kw">ylab</span>(<span class="dt">label=</span><span class="st">&quot;IMR&quot;</span>)</a></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <pre><code>## Warning: Removed 1 rows containing non-finite values (stat_smooth).</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
@@ -536,28 +572,35 @@ layout: post
 <p>As I mentioned above, finding the right table can be a challenge, especially for new data users. <code>tidycensus</code> has the <code>load_variables()</code> function that will load all of the available tables for a specific table type.</p>
 <p>For example, if we are interested in variables from the ACS <a href="https://www.census.gov/acs/www/data/data-tables-and-tools/data-profiles/2016/">data profile</a> tables, we can load all available variables then use R to search for what we need.</p>
 <p>One of the best ways to search is to use <a href="https://en.wikipedia.org/wiki/Grep"><code>grep()</code></a>, which is a tool for searching for patterns within text, and is <strong><em>SUPER USEFUL!</em></strong></p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1"><span class="kw">library</span>(tidycensus)</a>
-<a class="sourceLine" id="cb125-2" data-line-number="2"><span class="kw">library</span>(sf)</a></code></pre></div>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1">?load_variables</a>
-<a class="sourceLine" id="cb126-2" data-line-number="2">v15_Profile &lt;-<span class="st"> </span><span class="kw">load_variables</span>(<span class="dt">year =</span> <span class="dv">2018</span> , <span class="dt">dataset =</span> <span class="st">&quot;acs5/profile&quot;</span>,</a>
-<a class="sourceLine" id="cb126-3" data-line-number="3">                              <span class="dt">cache =</span> <span class="ot">TRUE</span>) <span class="co">#demographic profile tables</span></a>
-<a class="sourceLine" id="cb126-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb126-5" data-line-number="5"><span class="co">#Open the data for examination</span></a>
-<a class="sourceLine" id="cb126-6" data-line-number="6"><span class="kw">View</span>(v15_Profile)</a>
-<a class="sourceLine" id="cb126-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb126-8" data-line-number="8"><span class="co">#Search for variables by keywords in the label</span></a>
-<a class="sourceLine" id="cb126-9" data-line-number="9">v15_Profile[<span class="kw">grep</span>(<span class="dt">x =</span> v15_Profile<span class="op">$</span>label, <span class="st">&quot;Median household&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;label&quot;</span>)]</a></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="kw">library</span>(tidycensus)</a>
+<a class="sourceLine" id="cb126-2" data-line-number="2"><span class="kw">library</span>(sf)</a></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1">v15_Profile &lt;-<span class="st"> </span><span class="kw">load_variables</span>(<span class="dt">year =</span> <span class="dv">2018</span> , <span class="dt">dataset =</span> <span class="st">&quot;acs5/profile&quot;</span>,</a>
+<a class="sourceLine" id="cb127-2" data-line-number="2">                              <span class="dt">cache =</span> <span class="ot">TRUE</span>) <span class="co">#demographic profile tables</span></a>
+<a class="sourceLine" id="cb127-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb127-4" data-line-number="4"><span class="co">#Open the data for examination</span></a>
+<a class="sourceLine" id="cb127-5" data-line-number="5"><span class="kw">head</span>(v15_Profile)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 3
+##   name     label                                    concept                     
+##   &lt;chr&gt;    &lt;chr&gt;                                    &lt;chr&gt;                       
+## 1 DP02_00… Estimate!!HOUSEHOLDS BY TYPE!!Total hou… SELECTED SOCIAL CHARACTERIS…
+## 2 DP02_00… Percent Estimate!!HOUSEHOLDS BY TYPE!!T… SELECTED SOCIAL CHARACTERIS…
+## 3 DP02_00… Estimate!!HOUSEHOLDS BY TYPE!!Total hou… SELECTED SOCIAL CHARACTERIS…
+## 4 DP02_00… Percent Estimate!!HOUSEHOLDS BY TYPE!!T… SELECTED SOCIAL CHARACTERIS…
+## 5 DP02_00… Estimate!!HOUSEHOLDS BY TYPE!!Total hou… SELECTED SOCIAL CHARACTERIS…
+## 6 DP02_00… Percent Estimate!!HOUSEHOLDS BY TYPE!!T… SELECTED SOCIAL CHARACTERIS…</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1"><span class="co">#Search for variables by keywords in the label</span></a>
+<a class="sourceLine" id="cb129-2" data-line-number="2">v15_Profile[<span class="kw">grep</span>(<span class="dt">x =</span> v15_Profile<span class="op">$</span>label, <span class="st">&quot;Median household&quot;</span>), <span class="kw">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;label&quot;</span>)]</a></code></pre></div>
 <pre><code>## # A tibble: 2 x 2
 ##   name       label                                                              
 ##   &lt;chr&gt;      &lt;chr&gt;                                                              
 ## 1 DP03_0062  Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED DOLLARS)…
 ## 2 DP03_0062P Percent Estimate!!INCOME AND BENEFITS (IN 2018 INFLATION-ADJUSTED …</code></pre>
 <p>Also, if you want the names and info for the subject tables, change the <code>dataset =</code> argument to <code>acs5/subject</code></p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">v15_subject &lt;-<span class="st"> </span><span class="kw">load_variables</span>(<span class="dt">year =</span> <span class="dv">2015</span> ,<span class="dt">dataset=</span> <span class="st">&quot;acs5/subject&quot;</span>,</a>
-<a class="sourceLine" id="cb128-2" data-line-number="2">                              <span class="dt">cache =</span> <span class="ot">TRUE</span>) <span class="co">#demographic subject tables</span></a></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" data-line-number="1">v15_subject &lt;-<span class="st"> </span><span class="kw">load_variables</span>(<span class="dt">year =</span> <span class="dv">2015</span> ,<span class="dt">dataset=</span> <span class="st">&quot;acs5/subject&quot;</span>,</a>
+<a class="sourceLine" id="cb131-2" data-line-number="2">                              <span class="dt">cache =</span> <span class="ot">TRUE</span>) <span class="co">#demographic subject tables</span></a></code></pre></div>
 <p>Finally, to view variables in the detailed tables, change the <code>dataset =</code> argument to <code>acs5</code></p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1">v15_detailed &lt;-<span class="st"> </span><span class="kw">load_variables</span>(<span class="dt">year =</span> <span class="dv">2015</span> , <span class="dt">dataset =</span> <span class="st">&quot;acs5&quot;</span>,</a>
-<a class="sourceLine" id="cb129-2" data-line-number="2">                               <span class="dt">cache =</span> <span class="ot">TRUE</span>) <span class="co">#demographic detail tables</span></a></code></pre></div>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">v15_detailed &lt;-<span class="st"> </span><span class="kw">load_variables</span>(<span class="dt">year =</span> <span class="dv">2015</span> , <span class="dt">dataset =</span> <span class="st">&quot;acs5&quot;</span>,</a>
+<a class="sourceLine" id="cb132-2" data-line-number="2">                               <span class="dt">cache =</span> <span class="ot">TRUE</span>) <span class="co">#demographic detail tables</span></a></code></pre></div>
 <p>If you are interested in variables from the decennial census, change the <code>dataset =</code> argument to <code>sf1</code> or <code>sf3</code> depending on which decennial summary file you want.</p>
 <div style="page-break-after: always;"></div>
 </div>
@@ -566,10 +609,10 @@ layout: post
 <p>Here is a real example</p>
 <p>The data profile tables are very useful because they contain lots of pre-calculated variables.</p>
 <p>Here is a query where we extract the median household income in census tracts from the 2015 ACS for Bexar County, Texas. We can also get the spatial data by requesting <code>geometry=TRUE</code>. Using <code>output=&quot;wide&quot;</code> will put each variable in a column of the data set, with each row being a census tract.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">sa_acs&lt;-<span class="kw">get_acs</span>(<span class="dt">geography =</span> <span class="st">&quot;tract&quot;</span>, <span class="dt">state=</span><span class="st">&quot;TX&quot;</span>, <span class="dt">county =</span> <span class="st">&quot;Bexar&quot;</span>,</a>
-<a class="sourceLine" id="cb130-2" data-line-number="2">                <span class="dt">year =</span> <span class="dv">2018</span>,</a>
-<a class="sourceLine" id="cb130-3" data-line-number="3">                <span class="dt">variables=</span><span class="kw">c</span>( <span class="st">&quot;DP03_0062E&quot;</span>) ,</a>
-<a class="sourceLine" id="cb130-4" data-line-number="4">                <span class="dt">geometry =</span> T, <span class="dt">output =</span> <span class="st">&quot;wide&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1">sa_acs&lt;-<span class="kw">get_acs</span>(<span class="dt">geography =</span> <span class="st">&quot;tract&quot;</span>, <span class="dt">state=</span><span class="st">&quot;TX&quot;</span>, <span class="dt">county =</span> <span class="st">&quot;Bexar&quot;</span>,</a>
+<a class="sourceLine" id="cb133-2" data-line-number="2">                <span class="dt">year =</span> <span class="dv">2018</span>,</a>
+<a class="sourceLine" id="cb133-3" data-line-number="3">                <span class="dt">variables=</span><span class="kw">c</span>( <span class="st">&quot;DP03_0062E&quot;</span>) ,</a>
+<a class="sourceLine" id="cb133-4" data-line-number="4">                <span class="dt">geometry =</span> T, <span class="dt">output =</span> <span class="st">&quot;wide&quot;</span>)</a></code></pre></div>
 <pre><code>## Getting data from the 2014-2018 5-year ACS</code></pre>
 <pre><code>## Downloading feature geometry from the Census website.  To cache shapefiles for use in future sessions, set `options(tigris_use_cache = TRUE)`.</code></pre>
 <pre><code>## Using the ACS Data Profile</code></pre>
@@ -586,26 +629,26 @@ layout: post
 ##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
 ## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" data-line-number="1"><span class="co">#create a county FIPS code - 5 digit</span></a>
-<a class="sourceLine" id="cb135-2" data-line-number="2">sa_acs<span class="op">$</span>county&lt;-<span class="kw">substr</span>(sa_acs<span class="op">$</span>GEOID, <span class="dv">1</span>, <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb135-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb135-4" data-line-number="4"><span class="co">#rename variables and filter missing cases</span></a>
-<a class="sourceLine" id="cb135-5" data-line-number="5">sa_acs2&lt;-sa_acs<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb135-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>( <span class="dt">medhhinc=</span>DP03_0062E) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb135-7" data-line-number="7"><span class="st">  </span><span class="kw">na.omit</span>()</a>
-<a class="sourceLine" id="cb135-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb135-9" data-line-number="9"><span class="co">#take a peek at the first few lines of data</span></a>
-<a class="sourceLine" id="cb135-10" data-line-number="10"><span class="kw">head</span>(sa_acs2)</a></code></pre></div>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" data-line-number="1"><span class="co">#create a county FIPS code - 5 digit</span></a>
+<a class="sourceLine" id="cb138-2" data-line-number="2">sa_acs<span class="op">$</span>county&lt;-<span class="kw">substr</span>(sa_acs<span class="op">$</span>GEOID, <span class="dv">1</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb138-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb138-4" data-line-number="4"><span class="co">#rename variables and filter missing cases</span></a>
+<a class="sourceLine" id="cb138-5" data-line-number="5">sa_acs2&lt;-sa_acs<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb138-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>( <span class="dt">medhhinc=</span>DP03_0062E) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb138-7" data-line-number="7"><span class="st">  </span><span class="kw">na.omit</span>()</a>
+<a class="sourceLine" id="cb138-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb138-9" data-line-number="9"><span class="co">#take a peek at the first few lines of data</span></a>
+<a class="sourceLine" id="cb138-10" data-line-number="10"><span class="kw">head</span>(sa_acs2)</a></code></pre></div>
 <p>We can immediately map these data as well, because <code>tidycensus</code> can get you the geography corresponding to your data.</p>
 <p>Here, I use the <code>dplyr</code> pipe “<code>%&gt;%</code>” to feed the data into <code>ggplot</code> and map the median household income for each census tract in Bexar County in 2015, using a quantile break system.</p>
-<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" data-line-number="1">sa_acs2 <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb136-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">med_income=</span><span class="kw">cut</span>(medhhinc,<span class="dt">breaks =</span> <span class="kw">quantile</span>(medhhinc, <span class="dt">na.rm=</span>T, <span class="dt">p=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">length.out =</span> <span class="dv">9</span>)),<span class="dt">include.lowest =</span> T))<span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb136-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(<span class="dt">fill =</span> medhhinc, <span class="dt">color =</span> medhhinc)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb136-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_sf</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb136-5" data-line-number="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Median Household Income&quot;</span>, </a>
-<a class="sourceLine" id="cb136-6" data-line-number="6">          <span class="dt">subtitle =</span> <span class="st">&quot;Bexar County Texas, 2018 - Quantile Breaks&quot;</span>)<span class="op">+</span></a>
-<a class="sourceLine" id="cb136-7" data-line-number="7"><span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span><span class="kw">dollar_format</span>())<span class="op">+</span></a>
-<a class="sourceLine" id="cb136-8" data-line-number="8"><span class="st">  </span><span class="kw">scale_color_continuous</span>(<span class="dt">guide =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1">sa_acs2 <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb139-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">med_income=</span><span class="kw">cut</span>(medhhinc,<span class="dt">breaks =</span> <span class="kw">quantile</span>(medhhinc, <span class="dt">na.rm=</span>T, <span class="dt">p=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">length.out =</span> <span class="dv">9</span>)),<span class="dt">include.lowest =</span> T))<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb139-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>( <span class="kw">aes</span>(<span class="dt">fill =</span> medhhinc, <span class="dt">color =</span> medhhinc)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb139-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_sf</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb139-5" data-line-number="5"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Median Household Income&quot;</span>, </a>
+<a class="sourceLine" id="cb139-6" data-line-number="6">          <span class="dt">subtitle =</span> <span class="st">&quot;Bexar County Texas, 2018 - Quantile Breaks&quot;</span>)<span class="op">+</span></a>
+<a class="sourceLine" id="cb139-7" data-line-number="7"><span class="st">  </span><span class="kw">scale_fill_viridis_c</span>(<span class="dt">labels =</span> scales<span class="op">::</span><span class="kw">dollar_format</span>())<span class="op">+</span></a>
+<a class="sourceLine" id="cb139-8" data-line-number="8"><span class="st">  </span><span class="kw">scale_color_continuous</span>(<span class="dt">guide =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/summer2020_r_intro_files/figure-html/unnamed-chunk-42-1.png" /><!-- --></p>
 </div>
 </div>
