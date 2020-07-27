@@ -262,7 +262,7 @@ mydat<-data.frame(
 dim(mydat)
 length(mydat$x)
 #Open the dataframe in a viewer and just print it
-View(mydat)
+knitr::kable(mydat)
 print(mydat)
 ```
 
