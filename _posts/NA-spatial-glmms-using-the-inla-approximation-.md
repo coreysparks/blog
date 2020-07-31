@@ -1,137 +1,10 @@
-<!DOCTYPE html>
+---
+title: "Spatial GLMM(s) using the INLA Approximation "
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-
-<meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<meta name="author" content="Corey S. Sparks, Ph.D." />
-
-<meta name="date" content="2020-07-31" />
-
-<title>Spatial GLMM(s) using the INLA Approximation</title>
-
-
-
-<style type="text/css">code{white-space: pre;}</style>
-<style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
-/* A workaround for https://github.com/jgm/pandoc/issues/4278 */
-a.sourceLine {
-  pointer-events: auto;
-}
-
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
-
-
-
-<link rel="stylesheet" href="INLA_Infant_Mortality_files/style.css" type="text/css" />
-
-
-
-
-
-</head>
-
-<body>
-
-
-
-
-<section class="page-header">
-<h1 class="title toc-ignore project-name">Spatial GLMM(s) using the INLA Approximation</h1>
-<h4 class="author project-author">Corey S. Sparks, Ph.D.</h4>
-<h4 class="date project-date">July 31, 2020</h4>
-</section>
-
+author: "Corey S. Sparks, Ph.D."
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+layout: post
+---
 
 
 <section class="main-content">
@@ -376,13 +249,13 @@ a.sourceLine {
 <a class="sourceLine" id="cb19-3" data-line-number="3">us_co<span class="op">$</span>cofips&lt;-<span class="kw">paste</span>(us_co<span class="op">$</span>STATEFP, us_co<span class="op">$</span>COUNTYFP, <span class="dt">sep=</span><span class="st">&quot;&quot;</span>)</a>
 <a class="sourceLine" id="cb19-4" data-line-number="4">us_co<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_sf</span>()<span class="op">+</span><span class="kw">coord_sf</span>(<span class="dt">crs =</span><span class="dv">7603</span>)</a></code></pre></div>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-7-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-7-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">final.dat&lt;-<span class="kw">merge</span>( us_co,final.dat, <span class="dt">by=</span><span class="st">&quot;cofips&quot;</span>, <span class="dt">all.y=</span>F)</a>
 <a class="sourceLine" id="cb20-2" data-line-number="2">final.dat&lt;-final.dat[<span class="kw">order</span>(final.dat<span class="op">$</span>cofips, final.dat<span class="op">$</span>year),]</a>
 <a class="sourceLine" id="cb20-3" data-line-number="3">final.dat<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb20-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(year<span class="op">==</span><span class="dv">2000</span>)<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb20-5" data-line-number="5"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_sf</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>rate, <span class="dt">col=</span>rate))<span class="op">+</span><span class="kw">coord_sf</span>(<span class="dt">crs =</span><span class="dv">7603</span>)<span class="op">+</span><span class="kw">ggtitle</span>(<span class="st">&quot;Infant Mortality Rate - 2000&quot;</span>)</a></code></pre></div>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-8-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-8-1.png" /><!-- --></p>
 </div>
 <div id="model-setup" class="section level2">
 <h2>Model setup</h2>
@@ -398,12 +271,12 @@ a.sourceLine {
 <a class="sourceLine" id="cb21-2" data-line-number="2"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of Infant Mortality Rate by Year&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;US Counties, 2000-2007&quot;</span>)</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <pre><code>## Warning: Removed 1849 rows containing non-finite values (stat_bin).</code></pre>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-9-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-9-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> final.dat)<span class="op">+</span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span><span class="kw">log</span>(rate<span class="op">/</span>E_d) , <span class="dt">y=</span><span class="fl">0.5</span><span class="op">*</span>..density..))<span class="op">+</span><span class="kw">facet_wrap</span>(<span class="op">~</span>year)<span class="op">+</span></a>
 <a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label =</span> <span class="st">&quot;Distribution of Infant Mortality Relative Risk by Year&quot;</span>, <span class="dt">subtitle =</span> <span class="st">&quot;US Counties, 2000-2007&quot;</span>)</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <pre><code>## Warning: Removed 1849 rows containing non-finite values (stat_bin).</code></pre>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-9-2.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-9-2.png" /><!-- --></p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">final.dat<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb27-2" data-line-number="2"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">group_by</span>(cofips)<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb27-3" data-line-number="3"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">summarise</span>(<span class="dt">meanrate=</span><span class="kw">mean</span>(rate), <span class="dt">meanE=</span><span class="kw">mean</span>(E_d))<span class="op">%&gt;%</span></a>
@@ -418,7 +291,7 @@ a.sourceLine {
 <a class="sourceLine" id="cb27-12" data-line-number="12"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="dt">label=</span><span class="st">&quot;Relative Risk Quartile - period average 2000 to 2007&quot;</span>)<span class="op">+</span></a>
 <a class="sourceLine" id="cb27-13" data-line-number="13"><span class="st">  </span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">7603</span>)</a></code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-10-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-10-1.png" /><!-- --></p>
 <p>We can fit these model using the Bayesian framework with INLA.</p>
 <p>First, we consider the basic GLM for the mortality outcome, with out any hierarchical structure. We can write this model as a Negative Binomial model, for instance as:</p>
 <p><span class="math display">\[\text{Deaths}_{ij} \sim NB(\mu_{ij}, \gamma)\]</span> <span class="math display">\[\mu_{ij} = \text{log(E_d)}_{ij} + X&#39; \beta\]</span></p>
@@ -469,7 +342,7 @@ a.sourceLine {
 ##  the fitted values are computed</code></pre>
 <p>Plot our observed vs fitted values</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x=</span> mod1<span class="op">$</span>summary.fitted.values<span class="op">$</span>mean, <span class="dt">y=</span>final.dat<span class="op">$</span>rate<span class="op">/</span>final.dat<span class="op">$</span>E_d , <span class="dt">ylab=</span><span class="st">&quot;Observed&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;Estimated&quot;</span> )</a></code></pre></div>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-12-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-12-1.png" /><!-- --></p>
 <div id="basic-county-level-random-intercept-model" class="section level3">
 <h3>Basic county level random intercept model</h3>
 <p>Now we add basic nesting of rates within counties, with a random intercept term for each county. This would allow there to be heterogeneity in the mortality rate for each county, over and above each county’s observed characteristics.</p>
@@ -538,7 +411,7 @@ a.sourceLine {
 <pre><code>##                   low      high
 ## level:0.95 0.01491335 0.0256539</code></pre>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">plot</span>(m2, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">main=</span><span class="kw">c</span>(<span class="st">&quot;Posterior distibution for between county variance&quot;</span>, <span class="st">&quot;- IID model -&quot;</span>))</a></code></pre></div>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-14-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-14-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">final.dat<span class="op">$</span>fitted_m2&lt;-mod2<span class="op">$</span>summary.fitted.values<span class="op">$</span>mean</a>
 <a class="sourceLine" id="cb37-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb37-3" data-line-number="3">p1&lt;-final.dat<span class="op">%&gt;%</span></a>
@@ -558,7 +431,7 @@ a.sourceLine {
 ## 
 ##     combine</code></pre>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">pall&lt;-<span class="kw">grid.arrange</span>(p1, p2, <span class="dt">nrow=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-15-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-15-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">pall</a></code></pre></div>
 <pre><code>## TableGrob (2 x 1) &quot;arrange&quot;: 2 grobs
 ##   z     cells    name           grob
@@ -639,7 +512,7 @@ a.sourceLine {
 ## Posterior marginals for the linear predictor and
 ##  the fitted values are computed</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">y=</span>mod3<span class="op">$</span>summary.random<span class="op">$</span>year<span class="op">$</span>mean,<span class="dt">x=</span><span class="kw">unique</span>(final.dat<span class="op">$</span>year), <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)</a></code></pre></div>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-17-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-17-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">m3a&lt;-<span class="st"> </span><span class="kw">inla.tmarginal</span>(</a>
 <a class="sourceLine" id="cb47-2" data-line-number="2">        <span class="cf">function</span>(x) (<span class="dv">1</span><span class="op">/</span>x),</a>
 <a class="sourceLine" id="cb47-3" data-line-number="3">        mod3<span class="op">$</span>marginals.hyperpar<span class="op">$</span><span class="st">`</span><span class="dt">Precision for struct (iid component)</span><span class="st">`</span>)</a>
@@ -654,7 +527,7 @@ a.sourceLine {
 <a class="sourceLine" id="cb47-12" data-line-number="12"><span class="kw">lines</span>(m3b, <span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</a>
 <a class="sourceLine" id="cb47-13" data-line-number="13"><span class="kw">lines</span>(m3c, <span class="dt">col=</span><span class="st">&quot;green&quot;</span>)</a>
 <a class="sourceLine" id="cb47-14" data-line-number="14"><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;BYM IID&quot;</span>, <span class="st">&quot;BYM Spatial&quot;</span>, <span class="st">&quot;Year&quot;</span>), <span class="dt">col=</span><span class="kw">c</span>(<span class="dv">1</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>), <span class="dt">lty=</span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</a></code></pre></div>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-17-2.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-17-2.png" /><!-- --></p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="co">#HPD intervals</span></a>
 <a class="sourceLine" id="cb48-2" data-line-number="2"><span class="kw">inla.hpdmarginal</span>(.<span class="dv">95</span>,m3a)</a></code></pre></div>
 <pre><code>##                   low       high
@@ -683,7 +556,7 @@ a.sourceLine {
 <a class="sourceLine" id="cb54-11" data-line-number="11"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_sf</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>qrr))<span class="op">+</span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;RdBu&quot;</span> )<span class="op">+</span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;RdBu&quot;</span>, <span class="dt">na.value=</span><span class="st">&quot;grey&quot;</span>)<span class="op">+</span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Relative Risk Quartile&quot;</span>))<span class="op">+</span><span class="kw">ggtitle</span>(<span class="dt">label=</span><span class="st">&quot;Relative Risk Quartile - IID Model, 2007&quot;</span>)<span class="op">+</span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">7603</span>)</a>
 <a class="sourceLine" id="cb54-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb54-13" data-line-number="13">pall2&lt;-<span class="kw">grid.arrange</span>(p3, p4, <span class="dt">nrow=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-18-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-18-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1">pall2</a></code></pre></div>
 <pre><code>## TableGrob (2 x 1) &quot;arrange&quot;: 2 grobs
 ##   z     cells    name           grob
@@ -704,7 +577,7 @@ a.sourceLine {
 <a class="sourceLine" id="cb58-2" data-line-number="2">us_co<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb58-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">qse=</span><span class="kw">cut</span>(sp_re, <span class="dt">breaks =</span> <span class="kw">quantile</span>(sp_re, <span class="dt">p=</span><span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dt">length.out =</span> <span class="dv">6</span>)), <span class="dt">include.lowest =</span> T))<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb58-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_sf</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>qse))<span class="op">+</span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;RdBu&quot;</span> )<span class="op">+</span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;RdBu&quot;</span>, <span class="dt">na.value=</span><span class="st">&quot;grey&quot;</span>)<span class="op">+</span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;Spatial Excess Risk&quot;</span>))<span class="op">+</span><span class="kw">ggtitle</span>(<span class="dt">label=</span><span class="st">&quot;Spatial Random Effect - BYM Model&quot;</span>)<span class="op">+</span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">7603</span>)</a></code></pre></div>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-19-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-19-1.png" /><!-- --></p>
 </div>
 <div id="exceedence-probabilities" class="section level2">
 <h2>Exceedence probabilities</h2>
@@ -715,7 +588,7 @@ a.sourceLine {
 <a class="sourceLine" id="cb59-3" data-line-number="3">   <span class="dv">1</span><span class="op">-</span><span class="kw">inla.pmarginal</span>(thetastar, X)</a>
 <a class="sourceLine" id="cb59-4" data-line-number="4">}))</a>
 <a class="sourceLine" id="cb59-5" data-line-number="5"><span class="kw">hist</span>(inlaprob)</a></code></pre></div>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-20-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-20-1.png" /><!-- --></p>
 <p>So, we see lots of occasions where the exceedence probability is greater than .9. We can visualize these in a map.</p>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1">final.dat<span class="op">$</span>exceedprob&lt;-inlaprob</a>
 <a class="sourceLine" id="cb60-2" data-line-number="2"></a>
@@ -723,7 +596,7 @@ a.sourceLine {
 <a class="sourceLine" id="cb60-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(year<span class="op">%in%</span><span class="kw">c</span>(<span class="dv">2007</span>))<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb60-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">qrr=</span><span class="kw">cut</span>(exceedprob, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">.5</span>, <span class="fl">.9</span>, <span class="fl">.95</span>, <span class="fl">.99</span>, <span class="dv">1</span>), <span class="dt">include.lowest =</span> T))<span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb60-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>()<span class="op">+</span><span class="kw">geom_sf</span>(<span class="kw">aes</span>(<span class="dt">fill=</span>qrr))<span class="op">+</span><span class="kw">scale_colour_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span> )<span class="op">+</span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>, <span class="dt">na.value=</span><span class="st">&quot;grey&quot;</span>)<span class="op">+</span><span class="kw">guides</span>(<span class="dt">fill=</span><span class="kw">guide_legend</span>(<span class="dt">title=</span><span class="st">&quot;&quot;</span>))<span class="op">+</span><span class="kw">ggtitle</span>(<span class="dt">label=</span><span class="kw">expression</span>(<span class="kw">paste</span>(<span class="st">&quot;Exceedence Probability Relative Risk &quot;</span>,<span class="st">&quot;Pr( &quot;</span>,theta,<span class="st">&quot; &gt;1.25&quot;</span>,<span class="st">&quot; )  - 2007&quot;</span>) ))<span class="op">+</span><span class="kw">coord_sf</span>(<span class="dt">crs =</span> <span class="dv">7603</span>)</a></code></pre></div>
-<p><img src="INLA_Infant_Mortality_files/figure-html/unnamed-chunk-21-1.png" /><!-- --></p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-21-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="co">#library(mapview)</span></a>
 <a class="sourceLine" id="cb61-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb61-3" data-line-number="3"><span class="co">#map1&lt;-final.dat%&gt;%</span></a>
@@ -740,18 +613,3 @@ a.sourceLine {
 </div>
 </div>
 </section>
-
-
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-</body>
-</html>
