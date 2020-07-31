@@ -2,7 +2,7 @@
 title: "Spatial GLMM(s) using the INLA Approximation "
 
 author: "Corey S. Sparks, Ph.D."
-date: "July 29, 2020"
+date: "July 31, 2020"
 layout: post
 ---
 
