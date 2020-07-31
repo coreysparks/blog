@@ -1,7 +1,7 @@
 ---
 title: "Spatial GLMM(s) using the INLA Approximation "
 author: "Corey S. Sparks, Ph.D."
-date: "`r format(Sys.time(), '%B %d, %Y')`"
+date: "31 July, 2020"
 output: 
   html_document
 ---

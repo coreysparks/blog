@@ -2,7 +2,7 @@
 title: "Spatial GLMM(s) using the INLA Approximation "
 
 author: "Corey S. Sparks, Ph.D."
-date: "`r format(Sys.time(), '%B %d, %Y')`"
+date: "31 July, 2020"
 layout: post
 ---
 
@@ -314,10 +314,10 @@ layout: post
 ##    E_d, &quot;, &quot; verbose = F, control.compute = list(waic = T), 
 ##    control.predictor = list(link = 1), &quot;, &quot; num.threads = 2)&quot;) 
 ## Time used:
-##     Pre = 0.993, Running = 26.6, Post = 0.941, Total = 28.6 
+##     Pre = 0.859, Running = 25.1, Post = 0.806, Total = 26.7 
 ## Fixed effects:
 ##                 mean     sd 0.025quant 0.5quant 0.975quant   mode kld
-## (Intercept)   -5.045 10.721    -26.095   -5.046     15.987 -5.045   0
+## (Intercept)   -5.047 10.723    -26.102   -5.048     15.989 -5.047   0
 ## scale(pblack)  0.159  0.015      0.130    0.159      0.188  0.159   0
 ## scale(phisp)  -0.025  0.013     -0.050   -0.025      0.001 -0.025   0
 ## scale(ppov)    0.041  0.015      0.012    0.041      0.070  0.041   0
@@ -331,8 +331,8 @@ layout: post
 ##                                                         mode
 ## size for the nbinomial observations (1/overdispersion) 0.624
 ## 
-## Expected number of effective parameters(stdev): 5.04(0.002)
-## Number of equivalent replicates : 2125.11 
+## Expected number of effective parameters(stdev): 5.04(0.001)
+## Number of equivalent replicates : 2124.92 
 ## 
 ## Watanabe-Akaike information criterion (WAIC) ...: 114586.38
 ## Effective number of parameters .................: 10.27
@@ -367,10 +367,10 @@ layout: post
 ##    E_d, &quot;, &quot; verbose = F, control.compute = list(waic = T), 
 ##    control.predictor = list(link = 1), &quot;, &quot; num.threads = 2)&quot;) 
 ## Time used:
-##     Pre = 0.646, Running = 187, Post = 1.26, Total = 189 
+##     Pre = 0.594, Running = 199, Post = 1.15, Total = 200 
 ## Fixed effects:
 ##                 mean     sd 0.025quant 0.5quant 0.975quant   mode kld
-## (Intercept)   -2.824 10.758    -23.946   -2.824     18.280 -2.824   0
+## (Intercept)   -2.824 10.757    -23.944   -2.824     18.278 -2.824   0
 ## scale(pblack)  0.158  0.015      0.128    0.158      0.189  0.158   0
 ## scale(phisp)  -0.041  0.014     -0.069   -0.041     -0.013 -0.041   0
 ## scale(ppov)    0.044  0.015      0.014    0.044      0.074  0.044   0
@@ -383,13 +383,13 @@ layout: post
 ## Model hyperparameters:
 ##                                                          mean    sd 0.025quant
 ## size for the nbinomial observations (1/overdispersion)  0.627 0.009      0.609
-## Precision for struct                                   50.628 7.006     38.288
+## Precision for struct                                   50.624 7.007     38.290
 ##                                                        0.5quant 0.975quant
 ## size for the nbinomial observations (1/overdispersion)    0.627      0.644
-## Precision for struct                                     50.141     65.783
+## Precision for struct                                     50.135     65.785
 ##                                                          mode
 ## size for the nbinomial observations (1/overdispersion)  0.626
-## Precision for struct                                   49.179
+## Precision for struct                                   49.168
 ## 
 ## Expected number of effective parameters(stdev): 125.34(15.34)
 ## Number of equivalent replicates : 85.47 
@@ -408,8 +408,8 @@ layout: post
 <a class="sourceLine" id="cb34-3" data-line-number="3">        mod2<span class="op">$</span>marginals.hyperpar<span class="op">$</span><span class="st">`</span><span class="dt">Precision for struct</span><span class="st">`</span>)</a>
 <a class="sourceLine" id="cb34-4" data-line-number="4"><span class="co">#95% credible interval for the variance</span></a>
 <a class="sourceLine" id="cb34-5" data-line-number="5"><span class="kw">inla.hpdmarginal</span>(.<span class="dv">95</span>, <span class="dt">marginal=</span>m2)</a></code></pre></div>
-<pre><code>##                   low      high
-## level:0.95 0.01491335 0.0256539</code></pre>
+<pre><code>##                   low       high
+## level:0.95 0.01491364 0.02565568</code></pre>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">plot</span>(m2, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>, <span class="dt">main=</span><span class="kw">c</span>(<span class="st">&quot;Posterior distibution for between county variance&quot;</span>, <span class="st">&quot;- IID model -&quot;</span>))</a></code></pre></div>
 <p><img src="{{ site.url }}{{ site.baseurl }}/knitr_files/INLA_Infant_Mortality_files/figure-html/unnamed-chunk-14-1.png" /><!-- --></p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">final.dat<span class="op">$</span>fitted_m2&lt;-mod2<span class="op">$</span>summary.fitted.values<span class="op">$</span>mean</a>
@@ -472,7 +472,7 @@ layout: post
 ##    E_d, &quot;, &quot; verbose = F, control.compute = list(waic = T), 
 ##    control.predictor = list(link = 1), &quot;, &quot; num.threads = 2)&quot;) 
 ## Time used:
-##     Pre = 1.1, Running = 202, Post = 1.23, Total = 204 
+##     Pre = 0.774, Running = 165, Post = 1.32, Total = 167 
 ## Fixed effects:
 ##                 mean    sd 0.025quant 0.5quant 0.975quant   mode kld
 ## (Intercept)    0.115 0.129     -0.145    0.115      0.374  0.115   0
