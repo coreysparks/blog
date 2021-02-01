@@ -1,7 +1,7 @@
 ---
 title: "DEM 7283 - Example 1 - Survey Statistics using BRFSS data"
 author: "Corey Sparks, PhD"
-date: February 1, 2021
+date: "February 1, 2021"
 output:
    html_document:
     df_print: paged
