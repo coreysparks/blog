@@ -2,6 +2,7 @@
 title: "Intro to Point Pattern Analysis using R and QGIS"
 author: "Corey Sparks, Ph.D."
 date: "March 17, 2021"
+always_allow_html: yes
 output:
    html_document:
     df_print: paged
