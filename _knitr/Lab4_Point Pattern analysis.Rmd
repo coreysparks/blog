@@ -53,8 +53,6 @@ results.proj<-st_transform(results,
 
 
 ```{r}
-mv1= mapview(results.proj)
-mapshot(mv1, file = paste0(getwd(), "/map1.png"))
 
 library(tmap)
 library(tmaptools)
