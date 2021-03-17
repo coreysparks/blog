@@ -56,9 +56,18 @@ results.proj<-st_transform(results,
 mv1= mapview(results.proj)
 mapshot(mv1, file = paste0(getwd(), "/map1.png"))
 
+library(tmap)
+library(tmaptools)
+library(OpenStreetMap)
+bg<-  read_osm(results.proj, ext=1.1)
+
+tmap_mode("view")
+tm_basemap("OpenStreetMap.Mapnik")+
+  tm_shape(results.proj)+
+  tm_dots()
 ```
 
-![](C:/Users/ozd504/Documents/Github/blog/_knitr/map1.png)
+
 
 # mean feature - average of coordinates
 
@@ -67,12 +76,18 @@ mean_feature<-apply(st_coordinates(results.proj), MARGIN = 2, FUN = mean)
 mean_feature<-data.frame(place="meanfeature", x=mean_feature[1], y= mean_feature[2])
 mean_feature<-st_as_sf(mean_feature, coords = c("x", "y"), crs= 2278)
 
-mv2= mapview(mean_feature, col.regions="red")+mapview( results)
-mapshot(mv2, file = paste0(getwd(), "/map2.png"))
+
+tmap_mode("view")
+tm_basemap("OpenStreetMap.Mapnik")+
+  tm_shape(results.proj)+
+  tm_dots(col = "green")+
+  tm_shape(mean_feature)+
+  tm_dots(col = "red")
+
 
 ```
 
-![](C:/Users/ozd504/Documents/Github/blog/_knitr/map2.png)
+
 
 
 ## Central feature - Median of coordinates
@@ -81,35 +96,48 @@ median_feature<-apply(st_coordinates(results.proj), MARGIN = 2, FUN = median)
 median_feature<-data.frame(place="medianfeature", x=median_feature[1], y= median_feature[2])
 median_feature<-st_as_sf(median_feature, coords = c("x", "y"), crs= 2278)
 
-mv3 = mapview(median_feature, col.regions="green")+
-  mapview(mean_feature, col.regions="red")+
-  mapview( results)
-mapshot(mv3, file = paste0(getwd(), "/map3.png"))
+
+tmap_mode("view")
+tm_basemap("OpenStreetMap.Mapnik")+
+  tm_shape(results.proj)+
+  tm_dots(col = "green")+
+  tm_shape(mean_feature)+
+  tm_dots(col = "red")+
+  tm_shape(median_feature)+
+  tm_dots(col = "blue")
 
 ```
 
-![](C:/Users/ozd504/Documents/Github/blog/_knitr/map3.png)
+
 
 ## Buffer points
 ```{r}
 wicbuff<- st_buffer(results.proj, dist = 2500)
-mv4 = mapview(wicbuff)+mapview(results.proj, col.regions="green")
-mapshot(mv4, file = paste0(getwd(), "/map4.png"))
+
+tmap_mode("view")
+tm_basemap("OpenStreetMap.Mapnik")+
+  tm_shape(results.proj)+
+  tm_dots(col = "green")+
+  tm_shape(wicbuff)+
+  tm_polygons(col = "red", alpha = .1)
+
 
 ```
-![](C:/Users/ozd504/Documents/Github/blog/_knitr/map4.png)
+
 
 ## Convex hull plot
 ```{r}
 chull <- st_convex_hull(st_union(results))
 
-mv5 = mapview(chull)+
-  mapview(results, col.regions = "green")
-
-mapshot(mv5, file = paste0(getwd(), "/map5.png"))
+tmap_mode("view")
+tm_basemap("OpenStreetMap.Mapnik")+
+  tm_shape(results.proj)+
+  tm_dots(col = "green")+
+  tm_shape(chull)+
+  tm_polygons(col = "grey", alpha = .5)
 
 ```
-![](C:/Users/ozd504/Documents/Github/blog/_knitr/map4.png)
+
 
 ## kernel density  - You need projected data for this to work right
 R can do kernel density maps, but using simple features it's kind of complicated. I will use Qgis through R instead using the `qgisprocess` [package](https://github.com/paleolimbot/qgisprocess)
@@ -145,11 +173,17 @@ library(RColorBrewer)
 result<- qgis_as_raster(wic_dens)
 
 projection(result)<-crs(results.proj)
-mv6 = mapview(result)+mapview(results.proj)
-mapshot(mv6, file = paste0(getwd(), "/map6.png"))
+
+tmap_mode("view")
+tm_basemap("OpenStreetMap.Mapnik")+
+  tm_shape(results.proj)+
+  tm_dots(col="red")+
+  tm_shape(result)+
+  tm_raster()
+  
 
 ```
-![](C:/Users/ozd504/Documents/Github/blog/_knitr/map6.png)
+
 
 ## Spatial join
 A spatial join can combine attributes of one layer with another layer. Here I combine census variables with the WIC clinic points.
@@ -186,23 +220,34 @@ sa_trol<-st_cast(sa_acs2, "MULTILINESTRING")
 spjoin<-st_join(results.proj, sa_acs2)
 head(spjoin)
 
-mv7 = mapview(spjoin["punemp"])+mapview(sa_trol)
-mapshot(mv7, file = paste0(getwd(), "/map7.png"))
+tmap_mode("view")
+tm_basemap("OpenStreetMap.Mapnik")+
+  tm_shape(spjoin)+
+  tm_dots("punemp", size = .1)+
+  tm_shape(sa_acs2)+
+  tm_polygons(alpha = .1)
+
+
 ```
-![](C:/Users/ozd504/Documents/Github/blog/_knitr/map7.png)
+
 
 ## Count points in polygons
 Point in polygon operations are actually a spatial intersection (more on this next week!) where we see how many points fall within a given polygon. 
 
 ```{r}
 sa_acs2$nwic<- lengths(st_intersects(sa_acs2, results.proj))
-mv8 = mapview(sa_acs2, zcol="nwic")+
-  mapview(results.proj, col.regions = "green")
 
- mapshot(mv8, file = paste0(getwd(), "/map8.png"))
+
+tmap_mode("view")
+tm_basemap("OpenStreetMap.Mapnik")+
+  tm_shape(sa_acs2)+
+  tm_polygons("nwic")+
+  tm_shape(spjoin)+
+  tm_dots( size = .01)
+
 ```
 
-![](C:/Users/ozd504/Documents/Github/blog/_knitr/map8.png)
+
 
 ## Thiessen/Voronoi Polygons
 Thiessen or Voronoi polygons are a process where we can convert points into polygons.
@@ -221,11 +266,16 @@ wic_von<-qgis_run_algorithm(alg="qgis:voronoipolygons",
 
 wic_von<-sf::read_sf(qgis_output(wic_von, "OUTPUT"))
 
-mv9 = mapview(wic_von, alpha=.75)+
-  mapview(results.proj, col.regions="green")
- mapshot(mv9, file = paste0(getwd(), "/map9.png"))
+tmap_mode("view")
+tm_basemap("OpenStreetMap.Mapnik")+
+  tm_shape(wic_von)+
+  tm_polygons(col="grey")+
+  tm_shape(results.proj)+
+  tm_dots( size = .01)
+ 
+ 
 ```
-![](C:/Users/ozd504/Documents/Github/blog/_knitr/map9.png)
+
 
 ## Nearest Neighbor analysis
 
