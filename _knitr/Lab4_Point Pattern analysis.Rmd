@@ -54,9 +54,11 @@ results.proj<-st_transform(results,
 
 ```{r}
 mv1= mapview(results.proj)
-mv1@map
+mapshot(mv1, file = paste0(getwd(), "/map1.png"))
+
 ```
 
+![](C:/Users/ozd504/Documents/Github/blog/_knitr/map1.png)
 
 # mean feature - average of coordinates
 
@@ -65,8 +67,13 @@ mean_feature<-apply(st_coordinates(results.proj), MARGIN = 2, FUN = mean)
 mean_feature<-data.frame(place="meanfeature", x=mean_feature[1], y= mean_feature[2])
 mean_feature<-st_as_sf(mean_feature, coords = c("x", "y"), crs= 2278)
 
-mapview(mean_feature, col.regions="red")+mapview( results)
+mv2= mapview(mean_feature, col.regions="red")+mapview( results)
+mapshot(mv2, file = paste0(getwd(), "/map2.png"))
+
 ```
+
+![](C:/Users/ozd504/Documents/Github/blog/_knitr/map2.png)
+
 
 ## Central feature - Median of coordinates
 ```{r}
@@ -74,28 +81,35 @@ median_feature<-apply(st_coordinates(results.proj), MARGIN = 2, FUN = median)
 median_feature<-data.frame(place="medianfeature", x=median_feature[1], y= median_feature[2])
 median_feature<-st_as_sf(median_feature, coords = c("x", "y"), crs= 2278)
 
-mapview(median_feature, col.regions="green")+
+mv3 = mapview(median_feature, col.regions="green")+
   mapview(mean_feature, col.regions="red")+
   mapview( results)
+mapshot(mv3, file = paste0(getwd(), "/map3.png"))
 
 ```
 
+![](C:/Users/ozd504/Documents/Github/blog/_knitr/map3.png)
 
 ## Buffer points
 ```{r}
 wicbuff<- st_buffer(results.proj, dist = 2500)
-mapview(wicbuff)+mapview(results.proj, col.regions="green")
+mv4 = mapview(wicbuff)+mapview(results.proj, col.regions="green")
+mapshot(mv4, file = paste0(getwd(), "/map4.png"))
 
 ```
+![](C:/Users/ozd504/Documents/Github/blog/_knitr/map4.png)
 
 ## Convex hull plot
 ```{r}
 chull <- st_convex_hull(st_union(results))
 
-mapview(chull)+
+mv5 = mapview(chull)+
   mapview(results, col.regions = "green")
-```
 
+mapshot(mv5, file = paste0(getwd(), "/map5.png"))
+
+```
+![](C:/Users/ozd504/Documents/Github/blog/_knitr/map4.png)
 
 ## kernel density  - You need projected data for this to work right
 R can do kernel density maps, but using simple features it's kind of complicated. I will use Qgis through R instead using the `qgisprocess` [package](https://github.com/paleolimbot/qgisprocess)
@@ -131,8 +145,11 @@ library(RColorBrewer)
 result<- qgis_as_raster(wic_dens)
 
 projection(result)<-crs(results.proj)
-mapview(result)+mapview(results.proj)
+mv6 = mapview(result)+mapview(results.proj)
+mapshot(mv6, file = paste0(getwd(), "/map6.png"))
+
 ```
+![](C:/Users/ozd504/Documents/Github/blog/_knitr/map6.png)
 
 ## Spatial join
 A spatial join can combine attributes of one layer with another layer. Here I combine census variables with the WIC clinic points.
@@ -169,18 +186,23 @@ sa_trol<-st_cast(sa_acs2, "MULTILINESTRING")
 spjoin<-st_join(results.proj, sa_acs2)
 head(spjoin)
 
-mapview(spjoin["punemp"])+mapview(sa_trol)
+mv7 = mapview(spjoin["punemp"])+mapview(sa_trol)
+mapshot(mv7, file = paste0(getwd(), "/map7.png"))
 ```
+![](C:/Users/ozd504/Documents/Github/blog/_knitr/map7.png)
 
 ## Count points in polygons
 Point in polygon operations are actually a spatial intersection (more on this next week!) where we see how many points fall within a given polygon. 
 
 ```{r}
 sa_acs2$nwic<- lengths(st_intersects(sa_acs2, results.proj))
-mapview(sa_acs2, zcol="nwic")+
+mv8 = mapview(sa_acs2, zcol="nwic")+
   mapview(results.proj, col.regions = "green")
+
+ mapshot(mv8, file = paste0(getwd(), "/map8.png"))
 ```
 
+![](C:/Users/ozd504/Documents/Github/blog/_knitr/map8.png)
 
 ## Thiessen/Voronoi Polygons
 Thiessen or Voronoi polygons are a process where we can convert points into polygons.
@@ -199,11 +221,11 @@ wic_von<-qgis_run_algorithm(alg="qgis:voronoipolygons",
 
 wic_von<-sf::read_sf(qgis_output(wic_von, "OUTPUT"))
 
-mapview(wic_von, alpha=.75)+
+mv9 = mapview(wic_von, alpha=.75)+
   mapview(results.proj, col.regions="green")
-
+ mapshot(mv9, file = paste0(getwd(), "/map9.png"))
 ```
-
+![](C:/Users/ozd504/Documents/Github/blog/_knitr/map9.png)
 
 ## Nearest Neighbor analysis
 
