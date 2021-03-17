@@ -53,7 +53,8 @@ results.proj<-st_transform(results,
 
 
 ```{r}
-mapview(results.proj)
+mv1= mapview(results.proj)
+mv1@map
 ```
 
 
